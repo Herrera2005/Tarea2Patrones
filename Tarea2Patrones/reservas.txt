@@ -1,2 +1,1 @@
-1:CONFIRMADA:2024-12-10:1,Coche,Hertz,true:1,Delta,2024-12-10,2024-12-15,100:150.0,Tarjeta,Aprovado
-2:CANCELADA:2024-12-15:2,Camión,Enterprise,false:2,United,2024-12-20,2024-12-25,50:200.0,Efectivo,Pendiente
+1:CONFIRMADA:2024-12-10:1,ModeloX,2023,true:1,AerolineaX,2024-12-10,2024-12-12,100:100.0,Efectivo,CONFIRMADO

@@ -33,7 +33,7 @@ public class Tarea2Patrones {
     private static final String CLIENTE_TXT = "clientes.txt";
     private static final String ADMIN_TXT = "admin.txt";
     private static final String SOPORTE_TXT = "soporte.txt";
-    public ArrayList reservas = new ArrayList<>();
+    
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
