@@ -11,7 +11,12 @@ import clases.Reserva;
  * @author usuario
  */
 public class ObservadorIncumplimiento implements Observador{
+    private Reserva reserva;
 
+    public ObservadorIncumplimiento(Reserva reserva) {
+        this.reserva = reserva;
+    }
+    
     @Override
     public void actualizar(Reserva reserva) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
