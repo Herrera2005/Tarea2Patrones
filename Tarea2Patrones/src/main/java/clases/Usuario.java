@@ -8,7 +8,7 @@ package clases;
  *
  * @author herreranc
  */
-public abstract class Usuario implements ObservadorReserva{
+public abstract class Usuario {
     private int idCedula;
     private String nombre;
     private String email;
@@ -24,9 +24,4 @@ public abstract class Usuario implements ObservadorReserva{
     public boolean iniciarSecion(){
         return true;
     }
-
-    @Override
-    public abstract void actualizar();
-    
-    
 }
