@@ -9,6 +9,8 @@ import claseVuelo.*;
 import enums.EstadoReserva;
 import java.util.Date;
 
+import Notificaciones.Notificacion;
+
 /**
  *
  * @author herreranc
@@ -20,14 +22,16 @@ public class Reserva {
     private Vehiculo vehiculo;
     private Pago pago;
     private Vuelo vuelo;
+    private Cliente cliente;
 
-    public Reserva(int idReserva, EstadoReserva estadoReserva, Date fechaReserva, Vehiculo vehiculo, Vuelo vuelo, Pago pago) {
+    public Reserva(int idReserva, EstadoReserva estadoReserva, Date fechaReserva, Vehiculo vehiculo, Vuelo vuelo, Pago pago, Cliente cliente) {
         this.idReserva = idReserva;
         this.estadoReserva = estadoReserva;
         this.fechaReserva = fechaReserva;
         this.vehiculo = vehiculo;
         this.vuelo = vuelo;
         this.pago = pago;
+        this.cliente = cliente;
     }
 
     public int getIdReserva() {
@@ -86,7 +90,11 @@ public class Reserva {
     
     }
     
-    public void modificarReserva(){
-    
+    public void modificarReserva(String mensaje){
+
+
+    for (Notificacion notificacion :cliente.getNotificaciones()) {
+        notificacion.notificar(mensaje, cliente);
+    }
     }
 }

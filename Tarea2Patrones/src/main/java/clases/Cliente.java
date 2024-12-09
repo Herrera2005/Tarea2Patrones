@@ -12,13 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Notificaciones.Notificacion;
+
 /**
  *
  * @author herreranc
  */
 public class Cliente extends Usuario{
     
-    public List<Reserva> reservas;
+    private List<Reserva> reservas;
+    private List<Notificacion> notificaiones;
+
 
     public Cliente(int idCedula, String nombre, String email, String contrasenia) {
         super(idCedula, nombre, email, contrasenia);
@@ -39,6 +43,13 @@ public class Cliente extends Usuario{
     
     public void cancelarReserva(Reserva reserva){
     }
+
+    public List<Notificacion> getNotificaciones(){
+        return notificaiones;
+    }
+
+    
+    
     public void cargarReservas(File archivoCliente, Map<Integer, Reserva> todasLasReservas) {
         this.reservas = new ArrayList<>(); // Inicializar la lista de reservas
         try (BufferedReader reader = new BufferedReader(new FileReader(archivoCliente))) {
