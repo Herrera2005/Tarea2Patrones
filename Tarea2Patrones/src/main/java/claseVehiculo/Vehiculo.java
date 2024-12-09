@@ -14,6 +14,22 @@ public abstract class Vehiculo {
     private String Proveedor;
     private boolean disponibilidad;
 
+    public int getIdVehiculo() {
+        return idVehiculo;
+    }
+
+    public String getTipoVehiculo() {
+        return TipoVehiculo;
+    }
+
+    public String getProveedor() {
+        return Proveedor;
+    }
+
+    public boolean isDisponibilidad() {
+        return disponibilidad;
+    }
+
     public Vehiculo(int idVehiculo, String TipoVehiculo, String Proveedor, boolean disponibilidad) {
         this.idVehiculo = idVehiculo;
         this.TipoVehiculo = TipoVehiculo;

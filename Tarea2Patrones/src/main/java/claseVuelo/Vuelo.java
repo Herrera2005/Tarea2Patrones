@@ -20,6 +20,30 @@ public class Vuelo {
     private int asientosDisponibles;
     private List<Asiento> clases;
 
+    public int getIdVuelo() {
+        return idVuelo;
+    }
+
+    public String getAerolinea() {
+        return aerolinea;
+    }
+
+    public Date getHoraSalida() {
+        return horaSalida;
+    }
+
+    public Date getHoraLlegada() {
+        return horaLlegada;
+    }
+
+    public int getAsientosDisponibles() {
+        return asientosDisponibles;
+    }
+
+    public List<Asiento> getClases() {
+        return clases;
+    }
+
     public Vuelo(int idVuelo, String aerolinea, Date horaSalida, Date horaLlegada, int asientosDisponibles, List<Asiento> clases) {
         this.idVuelo = idVuelo;
         this.aerolinea = aerolinea;

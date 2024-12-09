@@ -29,6 +29,54 @@ public class Reserva {
         this.vuelo = vuelo;
         this.pago = pago;
     }
+
+    public int getIdReserva() {
+        return idReserva;
+    }
+
+    public EstadoReserva getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public Date getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
+
+    public void setEstadoReserva(EstadoReserva estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
+
+    public void setFechaReserva(Date fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
     
     public void confirmarReserva(){
     
