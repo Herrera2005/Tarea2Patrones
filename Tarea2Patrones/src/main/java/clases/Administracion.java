@@ -4,8 +4,6 @@
  */
 package clases;
 
-import claseVuelo.*;
-
 /**
  *
  * @author herreranc
