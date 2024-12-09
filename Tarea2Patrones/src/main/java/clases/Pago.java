@@ -15,6 +15,18 @@ public class Pago {
     private String metodoPago;
     private EstadoPago estadoPago;
 
+    public double getMonto() {
+        return monto;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
+    }
+
     public Pago(double monto, String metodoPago, EstadoPago estadoPago) {
         this.monto = monto;
         this.metodoPago = metodoPago;
