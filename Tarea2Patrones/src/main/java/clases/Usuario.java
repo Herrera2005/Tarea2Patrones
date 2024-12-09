@@ -8,7 +8,7 @@ package clases;
  *
  * @author herreranc
  */
-public abstract class Usuario {
+public class Usuario {
     private int idCedula;
     private String nombre;
     private String email;
