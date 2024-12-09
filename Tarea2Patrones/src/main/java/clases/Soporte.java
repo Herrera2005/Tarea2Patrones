@@ -8,6 +8,10 @@ package clases;
  *
  * @author usuario
  */
-public class Soporte {
+public class Soporte extends Usuario{
+    
+    public Soporte(int idCedula, String nombre, String email, String contrasenia) {
+        super(idCedula, nombre, email, contrasenia);
+    }
     
 }
