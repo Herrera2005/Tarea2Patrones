@@ -10,7 +10,7 @@ import enums.EstadoPago;
  *
  * @author herreranc
  */
-class Pago {
+public class Pago {
     private double monto;
     private String metodoPago;
     private EstadoPago estadoPago;
