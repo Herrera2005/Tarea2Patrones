@@ -7,6 +7,8 @@ package clases;
 import java.util.ArrayList;
 import java.util.List;
 
+import Notificaciones.Notificacion;
+
 /**
  *
  * @author herreranc
@@ -14,6 +16,8 @@ import java.util.List;
 public class Cliente extends Usuario{
     
     private List<Reserva> reservas;
+    private List<Notificacion> notificaiones;
+
 
     public Cliente(int idCedula, String nombre, String email, String contrasenia) {
         super(idCedula, nombre, email, contrasenia);
@@ -30,5 +34,19 @@ public class Cliente extends Usuario{
     
     public void cancelarReserva(Reserva reserva){
     }
+
+    public List<Notificacion> getNotificaciones(){
+        return notificaiones;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public List<Notificacion> getNotificaiones() {
+        return notificaiones;
+    }
+
+    
     
 }
