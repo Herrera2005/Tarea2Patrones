@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
  */
-package clases;
+package enums;
 
 /**
  *
- * @author herreranc
+ * @author usuario
  */
-public enum EstadoReserva {
-    Reservado, Confirmado, Cancelado;
+public enum EstadoPago {
+    Pendiente,Aprovado,Cancelado;
 }
