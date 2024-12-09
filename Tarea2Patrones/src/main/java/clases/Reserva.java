@@ -4,6 +4,7 @@
  */
 package clases;
 
+import claseVuelo.*;
 import enums.EstadoReserva;
 import java.util.Date;
 
