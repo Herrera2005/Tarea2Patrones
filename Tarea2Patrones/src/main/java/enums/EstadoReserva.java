@@ -9,5 +9,5 @@ package enums;
  * @author herreranc
  */
 public enum EstadoReserva {
-    Reservado, Confirmado, Cancelado;
+    RESERVADO, CONFIRMADO, CANCELADO;
 }

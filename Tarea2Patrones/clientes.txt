@@ -1,1 +1,3 @@
-cliente:client
+123:Juan:juan@example.com:password123
+456:Maria:maria@example.com:password456
+789:Carlos:carlos@example.com:password789
