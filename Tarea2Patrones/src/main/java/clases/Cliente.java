@@ -16,6 +16,9 @@ import java.util.Scanner;
 import com.mycompany.tarea2patrones.Tarea2Patrones;
 
 import Notificaciones.Notificacion;
+import Observer.GestorReservas;
+import Observer.ObservadorCambioReserva;
+import Observer.ObservadorIncumplimiento;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
@@ -121,7 +124,10 @@ public static void cancelarReserva(Cliente cliente) {
 
     if (reservaAEliminar != null) {
         cliente.eliminarReserva(idReserva);
-
+        GestorReservas gestor = new GestorReservas();
+            gestor.addObserver(new ObservadorCambioReserva(reservaAEliminar));
+            gestor.addObserver(new ObservadorIncumplimiento(reservaAEliminar));
+            gestor.notifyObservers(reservaAEliminar);
         // Actualizar los archivos
         Tarea2Patrones.eliminarReservaDeArchivoGeneral(idReserva);
         Tarea2Patrones.actualizarReservasCliente(cliente, idReserva);

@@ -2,5 +2,5 @@ ID: 123
 Nombre: Juan
 Email: juan@example.com
 Contrasena: password123
-Reservas:{1, 12, 2,3}
+Reservas:{1}
 Reserva: { ID: 8, Fecha: 1909-12-11 }
