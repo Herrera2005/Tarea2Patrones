@@ -9,5 +9,6 @@ package claseIncidente;
  * @author usuario
  */
 public interface ManejadorIncidente {
-    
+    void setNextHandler(ManejadorIncidente nextHandler);
+    void handleIncidente(Incidente incidente);
 }

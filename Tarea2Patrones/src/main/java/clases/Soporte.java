@@ -22,10 +22,10 @@ public class Soporte implements ManejadorIncidente {
     
     @Override
     public void handleIncidente(Incidente incidente) {
-        if (incidente.getEstado() == EstadoIncidente.PENDIENTE) {
+        if (incidente.getEstado() == EstadoIncidente.Derivado) {
             System.out.println("Soporte manejando el incidente: " + incidente.getDescripcion());
-            incidente.setEstado(EstadoIncidente.EN_ANALISIS);
-            System.out.println("Incidente actualizado a estado EN_ANALISIS.");
+            incidente.setEstado(EstadoIncidente.EnAnalisis);
+            System.out.println("Incidente actualizado a estado EnAnalisis.");
         } else if (nextHandler != null) {
             nextHandler.handleIncidente(incidente);
         } else {
