@@ -114,7 +114,7 @@ public class Tarea2Patrones {
                 crearArchivoCliente(archivoCliente, cliente);
             } else {
                 System.out.println("Archivo del cliente encontrado. Leyendo datos...");
-                Map<Integer, Reserva> todasLasReservas = cargarArchivoReservas("reservas.txt");
+                Map<Integer, Reserva> todasLasReservas = cargarArchivoReservas("reservas.txt",cliente);
                 cliente.cargarReservas(archivoCliente, todasLasReservas);
             }
 
@@ -262,7 +262,7 @@ public class Tarea2Patrones {
                     System.out.println("Reserva cancelada.");
                 }
                 case 3 -> {
-                    reservaSeleccionada.modificarReserva();
+                    reservaSeleccionada.modificarReserva("Se modifica reserva");
                     System.out.println("Reserva modificada.");
                 }
                 case 4 -> System.out.println("Regresando al menú anterior.");
@@ -322,7 +322,7 @@ public class Tarea2Patrones {
             }
         }
     }
-    private static Map<Integer, Reserva> cargarArchivoReservas(String archivoReservas) {
+    private static Map<Integer, Reserva> cargarArchivoReservas(String archivoReservas,Cliente cliente) {
         Map<Integer, Reserva> reservas = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(archivoReservas))) {
@@ -366,7 +366,7 @@ public class Tarea2Patrones {
                     );
 
                     // Crear y almacenar Reserva
-                    Reserva reserva = new Reserva(idReserva, estado, fechaReserva, vehiculo, vuelo, pago);
+                    Reserva reserva = new Reserva(idReserva, estado, fechaReserva, vehiculo, vuelo, pago,cliente);
                     reservas.put(idReserva, reserva);
                 }
             }
