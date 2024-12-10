@@ -10,6 +10,7 @@ import enums.EstadoReserva;
 import java.util.Date;
 
 import Notificaciones.Notificacion;
+import claseIncidente.Incidente;
 
 /**
  *
@@ -105,7 +106,9 @@ public class Reserva {
     public void cancelarReserva(){
     
     }
-    
+    public void crearIncidente(){
+        new Incidente();
+    }
     public void modificarReserva(String mensaje){
 
 

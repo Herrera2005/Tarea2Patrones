@@ -15,6 +15,9 @@ public class Incidente {
     private String descripcion;
     private EstadoIncidente estado;
 
+    public Incidente() {
+    }
+
     public Incidente(int idIncidente, String descripcion, EstadoIncidente estado) {
         this.idIncidente = idIncidente;
         this.descripcion = descripcion;
