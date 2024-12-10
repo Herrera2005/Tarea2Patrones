@@ -10,6 +10,7 @@ import claseVuelo.Vuelo;
 import clases.Cliente;
 import clases.Pago;
 import clases.Reserva;
+import clases.ReservaBuilder;
 import enums.EstadoPago;
 import enums.EstadoReserva;
 import java.io.BufferedReader;
@@ -207,7 +208,10 @@ public class Tarea2Patrones {
 
             switch (opcion) {
                 case 1 -> mostrarReservas(cliente); // Mostrar reservas del cliente
-                case 2 -> System.out.println("Realizando nueva reserva..."); // Implementar lógica para realizar reserva
+                case 2 -> {
+                    System.out.println("Creando una nueva reserva...");
+                    crearReserva(cliente);
+                }
                 case 3 -> {
                     System.out.println("Saliendo del menú cliente...");
                     salir = true; // Salir del bucle y regresar al menú principal
@@ -215,6 +219,47 @@ public class Tarea2Patrones {
                 default -> System.out.println("Opción no válida. Intenta de nuevo.");
             }
         }
+    }
+    private static void crearReserva(Cliente cliente) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Introduce el ID de la reserva: ");
+        int idReserva = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+
+        System.out.println("Introduce la fecha de la reserva (YYYY-MM-DD): ");
+        Date fechaReserva = Date.valueOf(scanner.nextLine());
+
+        System.out.println("Selecciona un vehículo (ID): ");
+        // Aquí se debería mostrar una lista de vehículos disponibles
+        int idVehiculo = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+        Vehiculo vehiculo = new VehiculoEconomico(idVehiculo, "MarcaX", "ModeloY", true);
+
+        System.out.println("Introduce los detalles del vuelo: ");
+        // Simular datos de vuelo para simplificar
+        Vuelo vuelo = new Vuelo(1, "AerolineaX", fechaReserva, fechaReserva, 100, new ArrayList<>());
+
+        System.out.println("Introduce el monto del pago: ");
+        double monto = scanner.nextDouble();
+        scanner.nextLine(); // Limpiar el buffer
+        System.out.println("Introduce el método de pago: ");
+        String metodoPago = scanner.nextLine();
+        Pago pago = new Pago(monto, metodoPago, EstadoPago.PENDIENTE);
+
+        // Usar el Builder para crear la reserva
+        Reserva nuevaReserva = new ReservaBuilder()
+                .setIdReserva(idReserva)
+                .setEstadoReserva(EstadoReserva.PENDIENTE)
+                .setFechaReserva(fechaReserva)
+                .setVehiculo(vehiculo)
+                .setVuelo(vuelo)
+                .setPago(pago)
+                .setCliente(cliente)
+                .build();
+
+        cliente.agregarReserva(nuevaReserva); // Método para agregar la reserva al cliente
+        System.out.println("Reserva creada exitosamente con ID: " + idReserva);
     }
     private static void mostrarReservas(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
@@ -322,7 +367,7 @@ public class Tarea2Patrones {
             }
         }
     }
-    private static Map<Integer, Reserva> cargarArchivoReservas(String archivoReservas,Cliente cliente) {
+    private static Map<Integer, Reserva> cargarArchivoReservas(String archivoReservas, Cliente cliente) {
         Map<Integer, Reserva> reservas = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(archivoReservas))) {
@@ -336,7 +381,7 @@ public class Tarea2Patrones {
                     EstadoReserva estado = EstadoReserva.valueOf(partes[1].trim());
                     Date fechaReserva = Date.valueOf(partes[2].trim());
 
-                    // Datos de Vehiculo
+                    // Datos de Vehículo
                     String[] datosVehiculo = partes[3].split(",");
                     Vehiculo vehiculo = new VehiculoEconomico(
                             Integer.parseInt(datosVehiculo[0].trim()),
@@ -365,8 +410,17 @@ public class Tarea2Patrones {
                             estadoPago
                     );
 
-                    // Crear y almacenar Reserva
-                    Reserva reserva = new Reserva(idReserva, estado, fechaReserva, vehiculo, vuelo, pago,cliente);
+                    // Crear y almacenar Reserva usando el Builder
+                    Reserva reserva = new ReservaBuilder()
+                            .setIdReserva(idReserva)
+                            .setEstadoReserva(estado)
+                            .setFechaReserva(fechaReserva)
+                            .setVehiculo(vehiculo)
+                            .setVuelo(vuelo)
+                            .setPago(pago)
+                            .setCliente(cliente)
+                            .build();
+
                     reservas.put(idReserva, reserva);
                 }
             }

@@ -24,6 +24,10 @@ public class Reserva {
     private Vuelo vuelo;
     private Cliente cliente;
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public Reserva(int idReserva, EstadoReserva estadoReserva, Date fechaReserva, Vehiculo vehiculo, Vuelo vuelo, Pago pago, Cliente cliente) {
         this.idReserva = idReserva;
         this.estadoReserva = estadoReserva;
@@ -33,6 +37,8 @@ public class Reserva {
         this.pago = pago;
         this.cliente = cliente;
     }
+
+   Reserva() {}
 
     public int getIdReserva() {
         return idReserva;

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import Notificaciones.Notificacion;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 /**
  *
@@ -70,6 +72,25 @@ public class Cliente extends Usuario{
             }
         } catch (IOException e) {
             System.out.println("Error al leer las reservas del cliente: " + e.getMessage());
+        }
+    }
+    public void agregarReserva(Reserva reserva) {
+        if (reservas == null) {
+            reservas = new ArrayList<>();
+        }
+
+        // Agregar la reserva a la lista del cliente
+        reservas.add(reserva);
+
+        // Persistir la información en el archivo del cliente
+        File archivoCliente = new File("cliente_" + getIdCedula() + ".txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente, true))) {
+            // Agregar la nueva reserva al archivo
+            writer.write("Reserva: { ID: " + reserva.getIdReserva() + ", Fecha: " + reserva.getFechaReserva() + " }");
+            writer.newLine();
+            System.out.println("La reserva con ID " + reserva.getIdReserva() + " se ha agregado exitosamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar la reserva en el archivo del cliente: " + e.getMessage());
         }
     }
 }

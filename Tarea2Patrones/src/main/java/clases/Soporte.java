@@ -4,14 +4,14 @@
  */
 package clases;
 
+import claseIncidente.Incidente;
+import claseIncidente.ManejadorIncidente;
+import enums.EstadoIncidente;
+
 /**
  *
  * @author usuario
  */
-public class Soporte extends Usuario{
-    
-    public Soporte(int idCedula, String nombre, String email, String contrasenia) {
-        super(idCedula, nombre, email, contrasenia);
-    }
-    
+public class Soporte {
+
 }

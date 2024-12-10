@@ -9,5 +9,5 @@ package enums;
  * @author usuario
  */
 public enum EstadoPago {
-    RESERVADO, CONFIRMADO, CANCELADO;
+    RESERVADO, CONFIRMADO, CANCELADO,PENDIENTE;
 }
