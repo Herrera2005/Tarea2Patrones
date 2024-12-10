@@ -18,11 +18,5 @@ public class VehiculoEconomico extends Vehiculo{
     public void confirmarVehiculo() {
         System.out.println("Vehículo económico confirmado.");
     }
-    @Override
-    public String toString() {
-        return getIdVehiculo() + "," +
-               getTipoVehiculo() + "," +
-               getProveedor() + "," +
-               isDisponibilidad();
-    }
+    
 }
