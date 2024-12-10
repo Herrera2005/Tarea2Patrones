@@ -1,0 +1,20 @@
+1001,Aero Naval,12-12-2024,01-01-2025,5,{Economico:52.20;Ejecutivo:54.30;PrimeraClase:75.50}
+1002,SkyWings,15-12-2024,02-01-2025,8,{Economico:48.50;PrimeraClase:85.75}
+1003,AirDreams,10-12-2024,25-12-2024,12,{Ejecutivo:60.00;PrimeraClase:95.00}
+1004,FlyHigh,18-12-2024,28-12-2024,6,{Economico:49.99;Ejecutivo:55.75}
+1005,GlobalAir,05-12-2024,22-12-2024,9,{Economico:50.00;PrimeraClase:88.90}
+1006,BlueSkies,20-12-2024,30-12-2024,3,{Ejecutivo:65.25}
+1007,CloudExpress,08-12-2024,18-12-2024,7,{Economico:53.40;PrimeraClase:90.50}
+1008,JetWorld,02-12-2024,15-12-2024,10,{Economico:54.10;Ejecutivo:58.30;PrimeraClase:92.60}
+1009,SkyVoyage,14-12-2024,04-01-2025,4,{Economico:51.75;Ejecutivo:57.00}
+1010,SunTravel,12-12-2024,29-12-2024,15,{PrimeraClase:100.00}
+1011,WindAir,11-12-2024,20-12-2024,2,{Ejecutivo:64.50}
+1012,CloudLine,09-12-2024,27-12-2024,11,{Economico:49.75;PrimeraClase:87.80}
+1013,AeroStar,13-12-2024,22-12-2024,5,{Economico:52.75;Ejecutivo:59.90}
+1014,FlyZone,19-12-2024,02-01-2025,13,{PrimeraClase:96.00}
+1015,GlobalWings,07-12-2024,19-12-2024,6,{Economico:50.25;Ejecutivo:56.90}
+1016,SkyJet,16-12-2024,28-12-2024,3,{Economico:52.00;PrimeraClase:91.00}
+1017,WorldFly,03-12-2024,14-12-2024,9,{Ejecutivo:60.50}
+1018,AirNova,17-12-2024,29-12-2024,8,{Economico:51.60;PrimeraClase:94.40}
+1019,SunWings,04-12-2024,16-12-2024,7,{Ejecutivo:61.20;PrimeraClase:93.50}
+1020,JetSky,06-12-2024,21-12-2024,14,{Economico:54.25;Ejecutivo:58.75}
