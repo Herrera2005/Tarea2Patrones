@@ -40,4 +40,10 @@ public class Pago {
     public boolean validarPago(){
         return true;
     }
+    @Override
+    public String toString() {
+        return monto + "," +
+               metodoPago + "," +
+               estadoPago;
+    }
 }
