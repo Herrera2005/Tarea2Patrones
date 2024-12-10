@@ -16,19 +16,19 @@ import java.util.List;
  */
 public abstract class Vehiculo {
     private int idVehiculo;
-    private String tipoVehiculo;
-    private String proveedor;
+    private String TipoVehiculo;
+    private String Proveedor;
     private boolean disponibilidad;
 
-    public Vehiculo(int idVehiculo, String tipoVehiculo, String proveedor, boolean disponibilidad) {
+    public Vehiculo(int idVehiculo, String TipoVehiculo, String Proveedor, boolean disponibilidad) {
         this.idVehiculo = idVehiculo;
-        this.tipoVehiculo = tipoVehiculo;
-        this.proveedor = proveedor;
+        this.TipoVehiculo = TipoVehiculo;
+        this.Proveedor = Proveedor;
         this.disponibilidad = disponibilidad;
     }
 
-    public boolean verificarDisponibilidad() {
-        return disponibilidad;
+    public boolean verificarDisponibilidad(){
+        return true;
     }
 
     public abstract void confirmarVehiculo();
