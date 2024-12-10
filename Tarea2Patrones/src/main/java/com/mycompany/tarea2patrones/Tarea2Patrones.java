@@ -193,7 +193,7 @@ public class Tarea2Patrones {
             switch (opcion) {
                 case 1 -> mostrarReservas(cliente);
                 case 2 -> crearReserva(cliente);
-                case 3 -> eliminarReserva(cliente);
+                case 3 -> Cliente.cancelarReserva(cliente);
                 case 4 -> {
                     System.out.println("Saliendo del menú cliente...");
                     salir = true;
@@ -202,40 +202,7 @@ public class Tarea2Patrones {
             }
         }
     }
-   private static void eliminarReserva(Cliente cliente) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Eliminar Reserva ===");
-        mostrarReservas(cliente);
-        if (cliente.getReservas().isEmpty()) {
-            return;
-        }
-
-        System.out.print("Introduce el ID de la reserva que deseas eliminar: ");
-        int idReserva = scanner.nextInt();
-        scanner.nextLine();
-
-        Reserva reservaAEliminar = null;
-        for (Reserva reserva : cliente.getReservas()) {
-            if (reserva.getIdReserva() == idReserva) {
-                reservaAEliminar = reserva;
-                break;
-            }
-        }
-
-        if (reservaAEliminar != null) {
-            cliente.eliminarReserva(idReserva);
-
-            // Actualizar los archivos
-            eliminarReservaDeArchivoGeneral(idReserva);
-            actualizarReservasCliente(cliente, idReserva);
-
-            System.out.println("Reserva eliminada exitosamente.");
-        } else {
-            System.out.println("No se encontró una reserva con ese ID.");
-        }
-    }
-   private static void eliminarReservaDeArchivoGeneral(int idReserva) {
+   public static void eliminarReservaDeArchivoGeneral(int idReserva) {
         File archivoReservas = new File(RESERVAS_TXT);
         List<String> lineasReservasActualizadas = new ArrayList<>();
 
@@ -262,7 +229,7 @@ public class Tarea2Patrones {
             System.out.println("Error al actualizar el archivo de reservas: " + e.getMessage());
         }
     }
-   private static void actualizarReservasCliente(Cliente cliente, int idReserva) {
+   public static void actualizarReservasCliente(Cliente cliente, int idReserva) {
         File archivoCliente = new File("cliente_" + cliente.getIdCedula() + ".txt");
         List<String> lineasActualizadas = new ArrayList<>();
 
@@ -391,7 +358,7 @@ public class Tarea2Patrones {
     }
     
 
-    private static void mostrarReservas(Cliente cliente) {
+    public static void mostrarReservas(Cliente cliente) {
         List<Reserva> reservas = cliente.getReservas();
         System.out.println("=== Tus Reservas ===");
         if (reservas.isEmpty()) {

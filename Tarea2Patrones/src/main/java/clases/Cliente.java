@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
+import com.mycompany.tarea2patrones.Tarea2Patrones;
 
 import Notificaciones.Notificacion;
 import java.io.BufferedWriter;
@@ -41,9 +44,6 @@ public class Cliente extends Usuario{
     
     public Reserva realizarReserva(){
         return null;
-    }
-    
-    public void cancelarReserva(Reserva reserva){
     }
 
     public List<Notificacion> getNotificaciones(){
@@ -97,4 +97,38 @@ public class Cliente extends Usuario{
    public void eliminarReserva(int idReserva) {
         reservas.removeIf(reserva -> reserva.getIdReserva() == idReserva);
     }
+
+public static void cancelarReserva(Cliente cliente) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("=== Eliminar Reserva ===");
+    Tarea2Patrones.mostrarReservas(cliente);
+    if (cliente.getReservas().isEmpty()) {
+        return;
+    }
+
+    System.out.print("Introduce el ID de la reserva que deseas eliminar: ");
+    int idReserva = scanner.nextInt();
+    scanner.nextLine();
+
+    Reserva reservaAEliminar = null;
+    for (Reserva reserva : cliente.getReservas()) {
+        if (reserva.getIdReserva() == idReserva) {
+            reservaAEliminar = reserva;
+            break;
+        }
+    }
+
+    if (reservaAEliminar != null) {
+        cliente.eliminarReserva(idReserva);
+
+        // Actualizar los archivos
+        Tarea2Patrones.eliminarReservaDeArchivoGeneral(idReserva);
+        Tarea2Patrones.actualizarReservasCliente(cliente, idReserva);
+
+        System.out.println("Reserva eliminada exitosamente.");
+    } else {
+        System.out.println("No se encontró una reserva con ese ID.");
+    }
+}
 }
