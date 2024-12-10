@@ -64,6 +64,7 @@ public class Cliente extends Usuario{
                     for (String id : idArray) {
                         int idReserva = Integer.parseInt(id.trim());
                         if (todasLasReservas.containsKey(idReserva)) {
+                            System.out.println(idReserva);
                             this.reservas.add(todasLasReservas.get(idReserva));
                         }
                     }

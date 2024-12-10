@@ -38,6 +38,10 @@ public class Reserva {
         this.cliente = cliente;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
 
    Reserva() {}
 
@@ -108,5 +112,14 @@ public class Reserva {
     for (Notificacion notificacion :cliente.getNotificaciones()) {
         notificacion.notificar(mensaje, cliente);
     }
+    }
+    @Override
+    public String toString() {
+        return idReserva + ":" +
+               estadoReserva + ":" +
+               fechaReserva + ":" +
+               vehiculo.toString() + ":" +
+               vuelo.toString() + ":" +
+               pago.toString();
     }
 }

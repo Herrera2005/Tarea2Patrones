@@ -116,6 +116,10 @@ public class Vuelo {
 
     @Override
     public String toString() {
-        return idVuelo + ", " + aerolinea + ", " + horaSalida + ", " + horaLlegada + ", " + asientosDisponibles + ", " + clases;
+        return idVuelo + "," +
+               aerolinea + "," +
+               horaSalida + "," +
+               horaLlegada + "," +
+               asientosDisponibles;
     }
 }
