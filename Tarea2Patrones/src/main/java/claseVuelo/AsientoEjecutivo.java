@@ -10,8 +10,8 @@ package claseVuelo;
  */
 public class AsientoEjecutivo extends Asiento{
 
-    public AsientoEjecutivo(int idClase, String tipoClase, double precio) {
-        super(idClase, tipoClase, precio);
+    public AsientoEjecutivo(int idClase, double precio) {
+        super(idClase, "Ejecutivo", precio);
     }
 
     @Override

@@ -23,6 +23,11 @@ public abstract class Asiento {
     
     }
     
+    @Override
+    public String toString() {
+        return tipoClase + " (" + precio + ")";
+    }
+    
     public abstract void verificarDisponibilidad();
     
     public abstract void bloquearAsiento();

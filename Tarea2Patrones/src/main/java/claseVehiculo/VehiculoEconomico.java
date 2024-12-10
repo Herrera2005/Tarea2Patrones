@@ -10,13 +10,13 @@ package claseVehiculo;
  */
 public class VehiculoEconomico extends Vehiculo{
 
-    public VehiculoEconomico(int idVehiculo, String TipoVehiculo, String Proveedor, boolean disponibilidad) {
-        super(idVehiculo, TipoVehiculo, Proveedor, disponibilidad);
+    public VehiculoEconomico(int idVehiculo, String tipoVehiculo, String proveedor, boolean disponibilidad) {
+        super(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
     }
-
+    
     @Override
     public void confirmarVehiculo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Vehículo económico confirmado.");
     }
     
 }

@@ -4,12 +4,15 @@
 
 package com.mycompany.tarea2patrones;
 
+import claseVehiculo.*;
+import claseVuelo.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -20,8 +23,14 @@ public class Tarea2Patrones {
     private static final String CLIENTE_TXT = "clientes.txt";
     private static final String ADMIN_TXT = "admin.txt";
     private static final String SOPORTE_TXT = "soporte.txt";
+    public static List<Vuelo> vuelos = Vuelo.cargarVuelosDesdeArchivo("Vuelos.txt");
+    public static List<Vehiculo> vehiculos = Vehiculo.getVehiculos("Vehiculos.txt");
 
     public static void main(String[] args) throws IOException {
+
+        for (Vehiculo v : vehiculos) {
+            System.out.println(v.getClass().getSimpleName() + " - " + v.verificarDisponibilidad());
+        }
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
