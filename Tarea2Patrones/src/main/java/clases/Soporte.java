@@ -12,6 +12,29 @@ import enums.EstadoIncidente;
  *
  * @author usuario
  */
-public class Soporte {
-
-}
+public class Soporte implements ManejadorIncidente {
+    private ManejadorIncidente nextHandler;
+    
+    @Override
+    public void setNextHandler(ManejadorIncidente nextHandler) {
+        this.nextHandler = nextHandler;
+    }
+    
+    @Override
+    public void handleIncidente(Incidente incidente) {
+        if (incidente.getEstado() == EstadoIncidente.PENDIENTE) {
+            System.out.println("Soporte manejando el incidente: " + incidente.getDescripcion());
+            incidente.setEstado(EstadoIncidente.EN_ANALISIS);
+            System.out.println("Incidente actualizado a estado EN_ANALISIS.");
+        } else if (nextHandler != null) {
+            nextHandler.handleIncidente(incidente);
+        } else {
+            System.out.println("Incidente no pudo ser manejado por ningún handler.");
+        }
+    }
+    
+    public boolean iniciarSesion() {
+        System.out.println("Soporte iniciando sesión...");
+        return true; 
+    }
+ }
