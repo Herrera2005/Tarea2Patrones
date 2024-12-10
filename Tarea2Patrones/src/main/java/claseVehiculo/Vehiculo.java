@@ -78,4 +78,12 @@ public abstract class Vehiculo {
         }
         return vehiculos;
     }
+
+    @Override
+    public String toString() {
+        return getIdVehiculo() + "," +
+               getTipoVehiculo() + "," +
+               getProveedor() + "," +
+               isDisponibilidad();
+    }
 }
