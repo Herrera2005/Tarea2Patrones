@@ -10,16 +10,16 @@ import clases.Reserva;
  *
  * @author usuario
  */
-public class ObservadorIncumplimiento implements Observador{
+public class ObservadorIncumplimiento implements Observador {
     private Reserva reserva;
 
     public ObservadorIncumplimiento(Reserva reserva) {
         this.reserva = reserva;
     }
-    
+
     @Override
     public void actualizar(Reserva reserva) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Se detectó un posible incumplimiento en la reserva con ID " + reserva.getIdReserva());
+        // Lógica para registrar o procesar el incumplimiento
     }
-    
 }

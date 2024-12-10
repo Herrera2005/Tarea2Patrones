@@ -4,6 +4,9 @@
 
 package com.mycompany.tarea2patrones;
 
+import Observer.GestorReservas;
+import Observer.ObservadorCambioReserva;
+import Observer.ObservadorIncumplimiento;
 import claseVehiculo.Vehiculo;
 import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Vuelo;
@@ -21,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,7 +184,8 @@ public class Tarea2Patrones {
             System.out.println("=== Menú Cliente ===");
             System.out.println("1. Ver reservas");
             System.out.println("2. Realizar nueva reserva");
-            System.out.println("3. Salir");
+            System.out.println("3. Eliminar reserva");
+            System.out.println("4. Salir");
             System.out.print("Selecciona una opción: ");
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -188,7 +193,8 @@ public class Tarea2Patrones {
             switch (opcion) {
                 case 1 -> mostrarReservas(cliente);
                 case 2 -> crearReserva(cliente);
-                case 3 -> {
+                case 3 -> eliminarReserva(cliente);
+                case 4 -> {
                     System.out.println("Saliendo del menú cliente...");
                     salir = true;
                 }
@@ -196,7 +202,98 @@ public class Tarea2Patrones {
             }
         }
     }
+   private static void eliminarReserva(Cliente cliente) {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("=== Eliminar Reserva ===");
+        mostrarReservas(cliente);
+        if (cliente.getReservas().isEmpty()) {
+            return;
+        }
+
+        System.out.print("Introduce el ID de la reserva que deseas eliminar: ");
+        int idReserva = scanner.nextInt();
+        scanner.nextLine();
+
+        Reserva reservaAEliminar = null;
+        for (Reserva reserva : cliente.getReservas()) {
+            if (reserva.getIdReserva() == idReserva) {
+                reservaAEliminar = reserva;
+                break;
+            }
+        }
+
+        if (reservaAEliminar != null) {
+            cliente.eliminarReserva(idReserva);
+
+            // Actualizar los archivos
+            eliminarReservaDeArchivoGeneral(idReserva);
+            actualizarReservasCliente(cliente, idReserva);
+
+            System.out.println("Reserva eliminada exitosamente.");
+        } else {
+            System.out.println("No se encontró una reserva con ese ID.");
+        }
+    }
+   private static void eliminarReservaDeArchivoGeneral(int idReserva) {
+        File archivoReservas = new File(RESERVAS_TXT);
+        List<String> lineasReservasActualizadas = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoReservas))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                // Verifica si la línea NO corresponde al ID de la reserva a eliminar
+                if (!linea.startsWith(idReserva + ":")) {
+                    lineasReservasActualizadas.add(linea);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de reservas: " + e.getMessage());
+        }
+
+        // Escribe las líneas actualizadas nuevamente en el archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoReservas))) {
+            for (String linea : lineasReservasActualizadas) {
+                writer.write(linea);
+                writer.newLine();
+            }
+            System.out.println("Archivo de reservas actualizado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al actualizar el archivo de reservas: " + e.getMessage());
+        }
+    }
+   private static void actualizarReservasCliente(Cliente cliente, int idReserva) {
+        File archivoCliente = new File("cliente_" + cliente.getIdCedula() + ".txt");
+        List<String> lineasActualizadas = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoCliente))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                if (linea.startsWith("Reservas:{")) {
+                    // Extraer la lista de IDs y eliminar el ID específico
+                    String reservasExistentes = linea.substring(9, linea.length() - 1).trim(); // Extraer contenido entre {}
+                    List<String> idsReservas = new ArrayList<>(Arrays.asList(reservasExistentes.split(", ")));
+                    idsReservas.remove(String.valueOf(idReserva)); // Eliminar el ID de la reserva
+                    lineasActualizadas.add("Reservas:{" + String.join(", ", idsReservas) + "}");
+                } else {
+                    lineasActualizadas.add(linea);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo del cliente: " + e.getMessage());
+        }
+
+        // Escribir las líneas actualizadas nuevamente en el archivo del cliente
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente))) {
+            for (String linea : lineasActualizadas) {
+                writer.write(linea);
+                writer.newLine();
+            }
+            System.out.println("Archivo del cliente actualizado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al actualizar el archivo del cliente: " + e.getMessage());
+        }
+    }
     private static void crearReserva(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
 

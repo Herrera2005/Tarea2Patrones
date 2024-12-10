@@ -94,4 +94,7 @@ public class Cliente extends Usuario{
             System.out.println("Error al guardar la reserva en el archivo del cliente: " + e.getMessage());
         }
     }
+   public void eliminarReserva(int idReserva) {
+        reservas.removeIf(reserva -> reserva.getIdReserva() == idReserva);
+    }
 }

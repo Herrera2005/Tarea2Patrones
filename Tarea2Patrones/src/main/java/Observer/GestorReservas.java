@@ -4,6 +4,7 @@
  */
 package Observer;
 
+import clases.Reserva;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,20 +14,22 @@ import java.util.List;
  */
 public class GestorReservas {
     private List<Observador> observaciones;
-    
+
     public GestorReservas() {
-        this.observaciones = new ArrayList();
+        this.observaciones = new ArrayList<>();
     }
-    
-    public void addObserver(Observador obs){
+
+    public void addObserver(Observador obs) {
         observaciones.add(obs);
     }
-    
-    public void removeObserver(Observador obs){
+
+    public void removeObserver(Observador obs) {
         observaciones.remove(obs);
     }
-    
-    public void notifyObservers(){
-        
+
+    public void notifyObservers(Reserva reserva) {
+        for (Observador obs : observaciones) {
+            obs.actualizar(reserva);
+        }
     }
 }
