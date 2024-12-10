@@ -4,6 +4,8 @@
  */
 package claseIncidente;
 
+import enums.EstadoIncidente;
+
 /**
  *
  * @author usuario
