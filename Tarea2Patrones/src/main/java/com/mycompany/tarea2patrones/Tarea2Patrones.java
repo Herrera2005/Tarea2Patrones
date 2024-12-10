@@ -225,7 +225,11 @@ public class Tarea2Patrones {
 
         if (reservaAEliminar != null) {
             cliente.eliminarReserva(idReserva);
-
+             // Notificar a los observadores
+            GestorReservas gestor = new GestorReservas();
+            gestor.addObserver(new ObservadorCambioReserva(reservaAEliminar));
+            gestor.addObserver(new ObservadorIncumplimiento(reservaAEliminar));
+            gestor.notifyObservers(reservaAEliminar);
             // Actualizar los archivos
             eliminarReservaDeArchivoGeneral(idReserva);
             actualizarReservasCliente(cliente, idReserva);
@@ -274,7 +278,7 @@ public class Tarea2Patrones {
                     String reservasExistentes = linea.substring(9, linea.length() - 1).trim(); // Extraer contenido entre {}
                     List<String> idsReservas = new ArrayList<>(Arrays.asList(reservasExistentes.split(", ")));
                     idsReservas.remove(String.valueOf(idReserva)); // Eliminar el ID de la reserva
-                    lineasActualizadas.add("Reservas:{" + String.join(", ", idsReservas) + "}");
+                    lineasActualizadas.add("Reservas:" + String.join(", ", idsReservas) + "}");
                 } else {
                     lineasActualizadas.add(linea);
                 }
