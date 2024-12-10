@@ -38,7 +38,13 @@ public class Reserva {
         this.cliente = cliente;
     }
 
+
    Reserva() {}
+
+    public void asociarCliente(Cliente cliente ){
+        this.cliente = cliente;
+    }
+
 
     public int getIdReserva() {
         return idReserva;
