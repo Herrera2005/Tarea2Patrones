@@ -5,6 +5,8 @@
 package claseVuelo;
 
 import claseVuelo.Asiento;
+import clases.Cliente;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import java.util.List;
  * @author herreranc
  */
 public class Vuelo {
+    private List<Cliente> pasajeros;
     private int idVuelo;
     private String aerolinea;
     private Date horaSalida;
@@ -50,6 +53,10 @@ public class Vuelo {
         return clases;
     }
 
+    public void anadirPasajero(Cliente pasajero){
+        pasajeros.add(pasajero);
+    }
+
     public Vuelo(int idVuelo, String aerolinea, Date horaSalida, Date horaLlegada, int asientosDisponibles, List<Asiento> clases) {
         this.idVuelo = idVuelo;
         this.aerolinea = aerolinea;
@@ -57,6 +64,7 @@ public class Vuelo {
         this.horaLlegada = horaLlegada;
         this.asientosDisponibles = asientosDisponibles;
         this.clases = clases;
+        this.pasajeros = new ArrayList<>();
     }
     
     public void verificarDisponibilidad(){
