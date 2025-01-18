@@ -25,6 +25,7 @@ import Observer.ObservadorCambioReserva;
 import Observer.ObservadorIncumplimiento;
 import claseVehiculo.Vehiculo;
 import claseVuelo.Vuelo;
+import com.mycompany.tarea2patrones.MenuC;
 import enums.EstadoReserva;
 
 import java.io.BufferedWriter;
@@ -55,9 +56,9 @@ public class Cliente extends Usuario{
     
     public void realizarReserva(){
         Random rd = new Random();
-        Vehiculo vh;
-        Vuelo vl;
-        Pago pg;
+        Vehiculo vh = null;
+        Vuelo vl = null;
+        Pago pg = null;
         LocalDate localDate = LocalDate.now();
         Reserva reserva = new Reserva(
             rd.nextInt(Integer.MAX_VALUE),EstadoReserva.PENDIENTE,Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),vh,vl,pg,this);
@@ -120,7 +121,7 @@ public static void cancelarReserva(Cliente cliente) {
     Scanner scanner = new Scanner(System.in);
 
     System.out.println("=== Eliminar Reserva ===");
-    Tarea2Patrones.mostrarReservas(cliente);
+    MenuC.mostrarReservas(cliente);
     if (cliente.getReservas().isEmpty()) {
         return;
     }
@@ -144,8 +145,8 @@ public static void cancelarReserva(Cliente cliente) {
             gestor.addObserver(new ObservadorIncumplimiento(reservaAEliminar));
             gestor.notifyObservers(reservaAEliminar);
         // Actualizar los archivos
-        Tarea2Patrones.eliminarReservaDeArchivoGeneral(idReserva);
-        Tarea2Patrones.actualizarReservasCliente(cliente, idReserva);
+        MenuC.eliminarReservaDeArchivoGeneral(idReserva);
+        MenuC.actualizarReservasCliente(cliente, idReserva);
 
         System.out.println("Reserva eliminada exitosamente.");
     } else {
