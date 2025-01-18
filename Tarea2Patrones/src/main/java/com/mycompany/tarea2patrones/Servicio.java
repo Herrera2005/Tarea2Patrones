@@ -20,7 +20,7 @@ import java.util.Scanner;
  * @author RUCO HOUSE
  */
 public class Servicio {
-    public void Iniciar(String CLIENTE_TXT,String ADMIN_TXT, String SOPORTE_TXT, String RESERVAS_TXT){
+    public void Iniciar(String CLIENTE_TXT,String ADMIN_TXT, String SOPORTE_TXT, String RESERVAS_TXT) throws IOException{
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -35,8 +35,8 @@ public class Servicio {
 
             switch (opcion) {
                 case 1 -> iniciarSesionCliente(scanner, CLIENTE_TXT,RESERVAS_TXT);
-                case 2 -> iniciarSesion(scanner, ADMIN_TXT, "Administración", Tarea2Patrones::menuAdministracion);
-                case 3 -> iniciarSesion(scanner, SOPORTE_TXT, "Soporte", Tarea2Patrones::menuSoporte);
+                case 2 -> iniciarSesion(scanner, ADMIN_TXT, "Administración", MenuAd::menuAdministracion);
+                case 3 -> iniciarSesion(scanner, SOPORTE_TXT, "Soporte", MenuSo::menuSoporte);
                 case 4 -> {
                     System.out.println("¡Gracias por usar el sistema!");
                     return;
@@ -94,15 +94,15 @@ public class Servicio {
                 File archivoCliente = new File("cliente_" + id + ".txt");
                 if (!archivoCliente.exists()) {
                     System.out.println("Archivo del cliente no encontrado. Creando archivo...");
-                    crearArchivoCliente(archivoCliente, cliente);
+                    Validaciones.crearArchivoCliente(archivoCliente, cliente);
                 } else {
                     System.out.println("Archivo del cliente encontrado. Leyendo datos...");
-                    Map<Integer, Reserva> todasLasReservas = cargarArchivoReservas(RESERVAS_TXT, cliente);
+                    Map<Integer, Reserva> todasLasReservas = Validaciones.cargarArchivoReservas(RESERVAS_TXT, cliente);
                     cliente.cargarReservas(archivoCliente, todasLasReservas);
                 }
 
                 System.out.println("¡Inicio de sesión exitoso como Cliente!");
-                menuCliente(cliente);
+                MenuC.menuCliente(cliente);
             } else {
                 System.out.println("Archivo de clientes no encontrado.");
             }
@@ -111,22 +111,7 @@ public class Servicio {
         }
     }
 
-    private static void crearArchivoCliente(File archivoCliente, Cliente cliente) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente))) {
-            writer.write("ID: " + cliente.getIdCedula());
-            writer.newLine();
-            writer.write("Nombre: " + cliente.getNombre());
-            writer.newLine();
-            writer.write("Email: " + cliente.getEmail());
-            writer.newLine();
-            writer.write("Contrasena: " + cliente.getContrasenia());
-            writer.newLine();
-            writer.write("Reservas:{}");
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo del cliente: " + e.getMessage());
-        }
-    }
+    
 
     
 }
