@@ -30,7 +30,8 @@ public class Reserva {
         this.cliente = cliente;
     }
 
-    public Reserva(int idReserva, EstadoReserva estadoReserva, Date fechaReserva, Vehiculo vehiculo, Vuelo vuelo, Pago pago, Cliente cliente) {
+    public Reserva(int idReserva, EstadoReserva estadoReserva, Date fechaReserva, Vehiculo vehiculo, Vuelo vuelo,
+            Pago pago, Cliente cliente) {
         this.idReserva = idReserva;
         this.estadoReserva = estadoReserva;
         this.fechaReserva = fechaReserva;
@@ -41,7 +42,7 @@ public class Reserva {
     }
 
     public Reserva() {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     public Cliente getCliente() {
@@ -49,23 +50,22 @@ public class Reserva {
     }
 
     // para administracion
-    public void notificarCliente(String mensaje){
+    public void notificarCliente(String mensaje) {
         List<Notificacion> notificaciones = cliente.getNotificaciones();
         for (Notificacion notificacion : notificaciones) {
             notificacion.notificar(mensaje, cliente);
         }
     }
 
-    public void asociarCliente(Cliente cliente ){
+    public void asociarCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
 
     public int getIdReserva() {
         return idReserva;
     }
 
-    public void quitarVehiculo(String mensaje){
+    public void quitarVehiculo(String mensaje) {
         vehiculo = null;
         notificarCliente(mensaje);
     }
@@ -113,31 +113,37 @@ public class Reserva {
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
-    
-    public void confirmarReserva(){
-    
+
+    public void confirmarReserva() {
+
     }
-    
-    public void cancelarReserva(String mensaje){
+
+    public void cancelarReserva(String mensaje) {
+        estadoReserva = EstadoReserva.CANCELADO;
         vehiculo.cancelarVehiculo(mensaje);
     }
-    public void crearIncidente(){
+
+    public void crearIncidente() {
         new Incidente();
     }
-    public void modificarReserva(String mensaje){
 
+    public void modificarReserva(String mensaje) {
 
-    for (Notificacion notificacion :cliente.getNotificaciones()) {
-        notificacion.notificar(mensaje, cliente);
+        for (Notificacion notificacion : cliente.getNotificaciones()) {
+            notificacion.notificar(mensaje, cliente);
+        }
     }
-    }
+
     @Override
-    public String toString() {
-        return idReserva + ":" +
-               estadoReserva + ":" +
-               fechaReserva + ":" +
-               vehiculo.toString() + ":" +
-               vuelo.toString() + ":" +
-               pago.toString();
-    }
+public String toString() {
+    return "Reserva ID: " + idReserva + "\n" +
+           "Estado: " + estadoReserva + "\n" +
+           "Fecha de Reserva: " + fechaReserva + "\n" +
+           "Cliente: " + cliente.getNombre() + "\n" +
+           "Vehículo: " + vehiculo.getTipoVehiculo() + " - " + vehiculo.getProveedor() + "\n" +
+           "Vuelo: " + vuelo.getIdVuelo() + " - Aerolínea: " + vuelo.getAerolinea() + "\n" +
+           "Pago: " + pago.getMonto() + " - Estado: " + pago.getEstadoPago() + "\n";
+}
+
+    
 }

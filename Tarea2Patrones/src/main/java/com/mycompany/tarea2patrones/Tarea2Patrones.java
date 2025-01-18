@@ -14,6 +14,9 @@ import clases.Cliente;
 import clases.Pago;
 import clases.Reserva;
 import clases.ReservaBuilder;
+import clases.SistemaReservas;
+import clases.SistemaReservasVehiculo;
+import clases.SistemaReservasVuelo;
 import enums.EstadoPago;
 import enums.EstadoReserva;
 import java.io.BufferedReader;
@@ -30,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import DataLoader.ClientLoader;
+
 /**
  *
  * @author herreranc
@@ -42,9 +47,14 @@ public class Tarea2Patrones {
     
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-         Servicio servicio = new Servicio();
-         servicio.Iniciar(CLIENTE_TXT, ADMIN_TXT, SOPORTE_TXT, RESERVAS_TXT);
+    ClientLoader clientes = new ClientLoader();
+    SistemaReservasVehiculo vehiculos = new SistemaReservasVehiculo();
+    SistemaReservasVuelo vuelos = new SistemaReservasVuelo();
+    SistemaReservas reservas = new SistemaReservas(vehiculos.getVehiculos(),vuelos.getVuelos(),clientes.getClientes());
+    
+    reservas.mostrarReservas();
+
+
     }
 
     
