@@ -24,8 +24,11 @@ import Observer.GestorReservas;
 import Observer.ObservadorCambioReserva;
 import Observer.ObservadorIncumplimiento;
 import claseVehiculo.Vehiculo;
+import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Vuelo;
 import com.mycompany.tarea2patrones.MenuC;
+
+import enums.EstadoPago;
 import enums.EstadoReserva;
 
 import java.io.BufferedWriter;
@@ -54,15 +57,78 @@ public class Cliente extends Usuario{
     
     }
     
-    public void realizarReservaPorConsola(){
+    public void realizarReservaPorConsola(List<Vehiculo> vehiculos,List<Vuelo> vuelos) {
         Random rd = new Random();
-        Vehiculo vh = null;
-        Vuelo vl = null;
-        Pago pg = null;
+        Scanner scanner = new Scanner(System.in);
+        // Selección de vehículo
+        System.out.println("=== Selecciona un vehículo ===");
+        for (Vehiculo v : vehiculos) {
+            System.out.println(v.toString());
+        }
+        System.out.print("Introduce el ID del vehículo: ");
+        int idVehiculo = scanner.nextInt();
+        scanner.nextLine();
+
+        Vehiculo vehiculoSeleccionado = null;
+        for (Vehiculo v : vehiculos) {
+            if (v.getIdVehiculo() == idVehiculo) {
+                vehiculoSeleccionado = v;
+                break;
+            }
+        }
+
+        if (vehiculoSeleccionado == null) {
+            System.out.println("Vehículo no encontrado.");
+            return;
+        }
+
+        // Selección de vuelo
+        System.out.println("=== Selecciona un vuelo ===");
+        for (Vuelo v : vuelos) {
+            System.out.println(v.toString());
+        }
+        System.out.print("Introduce el ID del vuelo: ");
+        int idVuelo = scanner.nextInt();
+        scanner.nextLine();
+
+        Vuelo vueloSeleccionado = null;
+        for (Vuelo v : vuelos) {
+            if (v.getIdVuelo() == idVuelo) {
+                vueloSeleccionado = v;
+                break;
+            }
+        }
+
+        if (vueloSeleccionado == null) {
+            System.out.println("Vuelo no encontrado.");
+            return;
+        }
+
+        // Realizar pago
+        System.out.println("=== Realizar pago ===");
+        System.out.print("Introduce el monto a pagar (por ejemplo, 100): ");
+        double montoPago = scanner.nextDouble();
+        scanner.nextLine();
+        Pago pago = new Pago(montoPago, "Método de pago", EstadoPago.CONFIRMADO); // El pago es exitoso por ahora
+
+        // Crear la reserva
         LocalDate localDate = LocalDate.now();
         Reserva reserva = new Reserva(
-            rd.nextInt(Integer.MAX_VALUE),EstadoReserva.PENDIENTE,Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),vh,vl,pg,this);
+            rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE, 
+            Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), 
+            vehiculoSeleccionado, vueloSeleccionado, pago, this);  // Asociar el cliente con la reserva
+        
+        // Agregar la reserva a la lista
         reservas.add(reserva);
+        this.agregarReserva(reserva);  // Agregar la reserva a la lista del cliente
+
+        // Confirmación
+        System.out.println("Reserva realizada exitosamente.");
+        System.out.println("ID Reserva: " + reserva.getIdReserva());
+        System.out.println("Cliente: " + this.getNombre());
+        System.out.println("Vehículo seleccionado: " + vehiculoSeleccionado.toString());
+        System.out.println("Vuelo seleccionado: " + vueloSeleccionado.toString());
+        System.out.println("Monto pagado: " + montoPago);
     }
 
     public List<Notificacion> getNotificaciones(){
@@ -102,16 +168,8 @@ public class Cliente extends Usuario{
         // Agregar la reserva a la lista del cliente
         reservas.add(reserva);
 
-        // Persistir la información en el archivo del cliente
-        File archivoCliente = new File("cliente_" + getIdCedula() + ".txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente, true))) {
-            // Agregar la nueva reserva al archivo
-            writer.write("Reserva: { ID: " + reserva.getIdReserva() + ", Fecha: " + reserva.getFechaReserva() + " }");
-            writer.newLine();
-            System.out.println("La reserva con ID " + reserva.getIdReserva() + " se ha agregado exitosamente.");
-        } catch (IOException e) {
-            System.out.println("Error al guardar la reserva en el archivo del cliente: " + e.getMessage());
-        }
+       
+        
     }
    public void eliminarReserva(int idReserva) {
         reservas.removeIf(reserva -> reserva.getIdReserva() == idReserva);
@@ -140,17 +198,17 @@ public static void cancelarReserva(Cliente cliente) {
 
     if (reservaAEliminar != null) {
         cliente.eliminarReserva(idReserva);
-        GestorReservas gestor = new GestorReservas();
-            gestor.addObserver(new ObservadorCambioReserva(reservaAEliminar));
-            gestor.addObserver(new ObservadorIncumplimiento(reservaAEliminar));
-            gestor.notifyObservers(reservaAEliminar);
-        // Actualizar los archivos
-        MenuC.eliminarReservaDeArchivoGeneral(idReserva);
-        MenuC.actualizarReservasCliente(cliente, idReserva);
-
         System.out.println("Reserva eliminada exitosamente.");
     } else {
         System.out.println("No se encontró una reserva con ese ID.");
     }
 }
+
+public void addNotificacion(Notificacion notificacion) {
+    if (this.notificaiones == null) {
+        this.notificaiones = new ArrayList<>();
+    }
+    this.notificaiones.add(notificacion);
+}
+
 }

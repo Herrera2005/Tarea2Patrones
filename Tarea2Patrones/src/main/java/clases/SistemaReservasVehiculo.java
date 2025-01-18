@@ -20,6 +20,13 @@ public class SistemaReservasVehiculo {
         vehiculos.add(new VehiculoDeLujo(1, "DeLujo", "Proveedor A", true));
         vehiculos.add(new VehiculoEconomico(2, "Economico", "Proveedor B", true));
         vehiculos.add(new VehiculoEjecutivo(3, "Ejecutivo", "Proveedor C", true));
+        vehiculos.add(new VehiculoDeLujo(4, "Luxury Sedan", "Proveedor D", true));  // Nuevo vehículo de lujo
+        vehiculos.add(new VehiculoEconomico(5, "Compacto", "Proveedor E", false));  // Vehículo económico no disponible
+        vehiculos.add(new VehiculoEjecutivo(6, "Executive SUV", "Proveedor F", true));  // Nuevo vehículo ejecutivo
+        vehiculos.add(new VehiculoEconomico(7, "Hatchback", "Proveedor G", true));  // Vehículo económico disponible
+        vehiculos.add(new VehiculoDeLujo(8, "Convertible", "Proveedor H", true));  // Vehículo de lujo convertible
+        vehiculos.add(new VehiculoEjecutivo(9, "Luxury Sedan 2025", "Proveedor I", true));  // Vehículo ejecutivo nuevo modelo
+        vehiculos.add(new VehiculoEconomico(10, "Sedán", "Proveedor J", true));
 
     }
 

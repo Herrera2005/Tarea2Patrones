@@ -1,43 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.tarea2patrones;
 
 import clases.Cliente;
 import clases.Reserva;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Map;
+
+import java.util.List;
 import java.util.Scanner;
+
+import claseVehiculo.Vehiculo;
+import claseVuelo.Vuelo;
 
 /**
  *
  * @author RUCO HOUSE
  */
 public class Servicio {
-    public void Iniciar(String CLIENTE_TXT,String ADMIN_TXT, String SOPORTE_TXT, String RESERVAS_TXT) throws IOException{
+
+    private List<Cliente> clientes;
+
+    public Servicio(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void Iniciar(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("=== Menú Principal ===");
             System.out.println("1. Ingresar como Cliente");
             System.out.println("2. Ingresar como Administración");
-            System.out.println("3. Ingresar como Soporte");
-            System.out.println("4. Salir");
+            System.out.println("3. Salir");
             System.out.print("Selecciona una opción: ");
             int opcion = scanner.nextInt();
             scanner.nextLine(); // Limpiar el buffer
 
             switch (opcion) {
-                case 1 -> iniciarSesionCliente(scanner, CLIENTE_TXT,RESERVAS_TXT);
-                case 2 -> iniciarSesion(scanner, ADMIN_TXT, "Administración", MenuAd::menuAdministracion);
-                case 3 -> iniciarSesion(scanner, SOPORTE_TXT, "Soporte", MenuSo::menuSoporte);
-                case 4 -> {
+                case 1 -> iniciarSesionCliente(scanner,vuelos,vehiculos);
+                case 2 -> iniciarSesionAdministracion(reservas, vuelos, vehiculos);
+                case 3 -> {
                     System.out.println("¡Gracias por usar el sistema!");
                     return;
                 }
@@ -46,72 +45,42 @@ public class Servicio {
         }
     }
 
-    private static void iniciarSesion(Scanner scanner, String archivo, String tipoUsuario, Runnable menuUsuario) throws IOException {
-        System.out.println("=== Inicio de sesión para " + tipoUsuario + " ===");
-        Validaciones.crearArchivoSiNoExiste(archivo);
+    private void iniciarSesionAdministracion(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
+        System.out.println("=== Acceso a Administración ===");
+        System.out.println("¡Acceso otorgado sin necesidad de usuario ni contraseña!");
 
-        System.out.print("Usuario: ");
-        String usuario = scanner.nextLine();
-        System.out.print("Contraseña: ");
-        String contraseña = scanner.nextLine();
-
-        if (Validaciones.validarCredenciales(usuario, contraseña, archivo)) {
-            System.out.println("¡Inicio de sesión exitoso como " + tipoUsuario + "!");
-            menuUsuario.run();
-        } else {
-            System.out.println("Credenciales incorrectas. Intenta de nuevo.");
-        }
+        // Mostrar menú de administración
+        MenuAd.menuAdministracion(reservas,vuelos,vehiculos);
     }
-    private static void iniciarSesionCliente(Scanner scanner, String archivoClientes,String RESERVAS_TXT) {
+
+        
+
+    private void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
         System.out.println("=== Inicio de sesión para Cliente ===");
-        System.out.print("Usuario (ID): ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
-        System.out.print("Contraseña: ");
-        String contrasenia = scanner.nextLine();
+        System.out.println("Selecciona un cliente para iniciar sesión:");
 
-        Cliente cliente = null;
-        File archivo = new File(archivoClientes);
-
-        try {
-            if (archivo.exists()) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-                    String linea;
-                    while ((linea = reader.readLine()) != null) {
-                        String[] partes = linea.split(":");
-                        if (partes.length == 4 && Integer.parseInt(partes[0]) == id && partes[3].equals(contrasenia)) {
-                            cliente = new Cliente(id, partes[1], partes[2], partes[3]);
-                            break;
-                        }
-                    }
-                }
-
-                if (cliente == null) {
-                    System.out.println("ID o contraseña incorrectos. Intenta de nuevo.");
-                    return;
-                }
-
-                File archivoCliente = new File("cliente_" + id + ".txt");
-                if (!archivoCliente.exists()) {
-                    System.out.println("Archivo del cliente no encontrado. Creando archivo...");
-                    Validaciones.crearArchivoCliente(archivoCliente, cliente);
-                } else {
-                    System.out.println("Archivo del cliente encontrado. Leyendo datos...");
-                    Map<Integer, Reserva> todasLasReservas = Validaciones.cargarArchivoReservas(RESERVAS_TXT, cliente);
-                    cliente.cargarReservas(archivoCliente, todasLasReservas);
-                }
-
-                System.out.println("¡Inicio de sesión exitoso como Cliente!");
-                MenuC.menuCliente(cliente);
-            } else {
-                System.out.println("Archivo de clientes no encontrado.");
-            }
-        } catch (IOException e) {
-            System.out.println("Error al manejar el archivo: " + e.getMessage());
+        // Mostrar lista de todos los clientes disponibles
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            System.out.println((i + 1) + ". " + cliente.getNombre() + " (ID: " + cliente.getIdCedula() + ")");
         }
+
+        System.out.print("Selecciona el número del cliente: ");
+        int opcion = scanner.nextInt();
+        scanner.nextLine(); // Limpiar buffer
+
+        if (opcion < 1 || opcion > clientes.size()) {
+            System.out.println("Opción no válida. Intenta de nuevo.");
+            return;
+        }
+
+        Cliente clienteSeleccionado = clientes.get(opcion - 1);
+
+        // Omitimos la contraseña y continuamos con el inicio de sesión directamente
+        System.out.println("¡Inicio de sesión exitoso como Cliente!");
+
+     
+        // Mostrar el menú del cliente
+        MenuC.menuCliente(clienteSeleccionado,vehiculos,vuelos);
     }
-
-    
-
-    
 }

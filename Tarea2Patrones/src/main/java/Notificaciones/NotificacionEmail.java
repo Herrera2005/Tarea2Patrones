@@ -5,6 +5,11 @@ import javax.management.Notification;
 import clases.Cliente;
 
 public class NotificacionEmail implements Notificacion {
+
+    public NotificacionEmail(String email){
+        this.correo = email;
+    }
+
     private String correo;
 
     public String getCorreo() {
