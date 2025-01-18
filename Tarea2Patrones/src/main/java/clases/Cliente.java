@@ -50,20 +50,7 @@ public class Cliente extends Usuario{
         return reservas;
     }
     
-    public void registrarse(){
-    
-    }
-    
-    public void realizarReservaPorConsola(){
-        Random rd = new Random();
-        Vehiculo vh = null;
-        Vuelo vl = null;
-        Pago pg = null;
-        LocalDate localDate = LocalDate.now();
-        Reserva reserva = new Reserva(
-            rd.nextInt(Integer.MAX_VALUE),EstadoReserva.PENDIENTE,Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),vh,vl,pg,this);
-        reservas.add(reserva);
-    }
+   
 
     public List<Notificacion> getNotificaciones(){
         return notificaiones;
