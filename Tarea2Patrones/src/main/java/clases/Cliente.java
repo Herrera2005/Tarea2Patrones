@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import Observer.GestorReservas;
 import Observer.ObservadorCambioReserva;
 import Observer.ObservadorIncumplimiento;
 import claseVehiculo.Vehiculo;
+import claseVuelo.Vuelo;
 import enums.EstadoReserva;
 
 import java.io.BufferedWriter;
@@ -51,10 +53,15 @@ public class Cliente extends Usuario{
     
     }
     
-    public Reserva realizarReserva(){
+    public void realizarReserva(){
         Random rd = new Random();
-        Vehiculo vd;
-        Reserva reserva = new Reserva(rd.nextInt(Integer.MAX_VALUE),EstadoReserva.RESERVADO,LocalDate.now(),vd,)
+        Vehiculo vh;
+        Vuelo vl;
+        Pago pg;
+        LocalDate localDate = LocalDate.now();
+        Reserva reserva = new Reserva(
+            rd.nextInt(Integer.MAX_VALUE),EstadoReserva.PENDIENTE,Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),vh,vl,pg,this);
+        reservas.add(reserva);
     }
 
     public List<Notificacion> getNotificaciones(){
