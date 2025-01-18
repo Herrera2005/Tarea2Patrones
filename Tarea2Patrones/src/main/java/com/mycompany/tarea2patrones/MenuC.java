@@ -1,7 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.mycompany.tarea2patrones;
 
 import Observer.GestorReservas;
@@ -25,113 +25,16 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
  *
- * @author herreranc
+ * @author RUCO HOUSE
  */
-public class Tarea2Patrones {
-    private static final String CLIENTE_TXT = "clientes.txt";
-    private static final String ADMIN_TXT = "admin.txt";
-    private static final String SOPORTE_TXT = "soporte.txt";
+public class MenuC {
     private static final String RESERVAS_TXT = "reservas.txt";
-    
-
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-         Servicio servicio = new Servicio();
-         servicio.Iniciar(CLIENTE_TXT, ADMIN_TXT, SOPORTE_TXT, RESERVAS_TXT);
-    }
-
-    private static void iniciarSesion(Scanner scanner, String archivo, String tipoUsuario, Runnable menuUsuario) throws IOException {
-        System.out.println("=== Inicio de sesión para " + tipoUsuario + " ===");
-        crearArchivoSiNoExiste(archivo);
-
-        System.out.print("Usuario: ");
-        String usuario = scanner.nextLine();
-        System.out.print("Contraseña: ");
-        String contraseña = scanner.nextLine();
-
-        if (validarCredenciales(usuario, contraseña, archivo)) {
-            System.out.println("¡Inicio de sesión exitoso como " + tipoUsuario + "!");
-            menuUsuario.run();
-        } else {
-            System.out.println("Credenciales incorrectas. Intenta de nuevo.");
-        }
-    }
-
-    private static void iniciarSesionCliente(Scanner scanner, String archivoClientes) {
-        System.out.println("=== Inicio de sesión para Cliente ===");
-        System.out.print("Usuario (ID): ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
-        System.out.print("Contraseña: ");
-        String contrasenia = scanner.nextLine();
-
-        Cliente cliente = null;
-        File archivo = new File(archivoClientes);
-
-        try {
-            if (archivo.exists()) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-                    String linea;
-                    while ((linea = reader.readLine()) != null) {
-                        String[] partes = linea.split(":");
-                        if (partes.length == 4 && Integer.parseInt(partes[0]) == id && partes[3].equals(contrasenia)) {
-                            cliente = new Cliente(id, partes[1], partes[2], partes[3]);
-                            break;
-                        }
-                    }
-                }
-
-                if (cliente == null) {
-                    System.out.println("ID o contraseña incorrectos. Intenta de nuevo.");
-                    return;
-                }
-
-                File archivoCliente = new File("cliente_" + id + ".txt");
-                if (!archivoCliente.exists()) {
-                    System.out.println("Archivo del cliente no encontrado. Creando archivo...");
-                    crearArchivoCliente(archivoCliente, cliente);
-                } else {
-                    System.out.println("Archivo del cliente encontrado. Leyendo datos...");
-                    Map<Integer, Reserva> todasLasReservas = cargarArchivoReservas(RESERVAS_TXT, cliente);
-                    cliente.cargarReservas(archivoCliente, todasLasReservas);
-                }
-
-                System.out.println("¡Inicio de sesión exitoso como Cliente!");
-                menuCliente(cliente);
-            } else {
-                System.out.println("Archivo de clientes no encontrado.");
-            }
-        } catch (IOException e) {
-            System.out.println("Error al manejar el archivo: " + e.getMessage());
-        }
-    }
-
-    private static void crearArchivoCliente(File archivoCliente, Cliente cliente) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente))) {
-            writer.write("ID: " + cliente.getIdCedula());
-            writer.newLine();
-            writer.write("Nombre: " + cliente.getNombre());
-            writer.newLine();
-            writer.write("Email: " + cliente.getEmail());
-            writer.newLine();
-            writer.write("Contrasena: " + cliente.getContrasenia());
-            writer.newLine();
-            writer.write("Reservas:{}");
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo del cliente: " + e.getMessage());
-        }
-    }
-
-    
-    private static void menuCliente(Cliente cliente) {
+    public static void menuCliente(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
         while (!salir) {
@@ -362,119 +265,5 @@ public class Tarea2Patrones {
         for (Reserva reserva : reservas) {
             System.out.println(reserva);
         }
-    }
-
-    private static void menuAdministracion() {
-        Scanner scanner = new Scanner(System.in);
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("=== Menú Administración ===");
-            System.out.println("1. Gestionar usuarios");
-            System.out.println("2. Configuración");
-            System.out.println("3. Salir");
-            System.out.print("Selecciona una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcion) {
-                case 1 -> System.out.println("Gestionando usuarios...");
-                case 2 -> System.out.println("Accediendo a configuración...");
-                case 3 -> {
-                    System.out.println("Saliendo del menú administración...");
-                    salir = true;
-                }
-                default -> System.out.println("Opción no válida. Intenta de nuevo.");
-            }
-        }
-    }
-
-    private static void menuSoporte() {
-        Scanner scanner = new Scanner(System.in);
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("=== Menú Soporte ===");
-            System.out.println("1. Ver incidentes");
-            System.out.println("2. Escalar incidente");
-            System.out.println("3. Salir");
-            System.out.print("Selecciona una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcion) {
-                case 1 -> System.out.println("Mostrando incidentes...");
-                case 2 -> System.out.println("Escalando incidente...");
-                case 3 -> {
-                    System.out.println("Saliendo del menú soporte...");
-                    salir = true;
-                }
-                default -> System.out.println("Opción no válida. Intenta de nuevo.");
-            }
-        }
-    }
-    private static Map<Integer, Reserva> cargarArchivoReservas(String archivoReservas, Cliente cliente) {
-        Map<Integer, Reserva> reservas = new HashMap<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivoReservas))) {
-            String linea;
-
-            while ((linea = reader.readLine()) != null) {
-                String[] partes = linea.split(":");
-                if (partes.length == 6) {
-                    // Datos de Reserva
-                    int idReserva = Integer.parseInt(partes[0].trim());
-                    EstadoReserva estado = EstadoReserva.valueOf(partes[1].trim());
-                    Date fechaReserva = Date.valueOf(partes[2].trim());
-
-                    // Datos de Vehículo
-                    String[] datosVehiculo = partes[3].split(",");
-                    Vehiculo vehiculo = new VehiculoEconomico(
-                            Integer.parseInt(datosVehiculo[0].trim()),
-                            datosVehiculo[1].trim(),
-                            datosVehiculo[2].trim(),
-                            Boolean.parseBoolean(datosVehiculo[3].trim())
-                    );
-
-                    // Datos de Vuelo
-                    String[] datosVuelo = partes[4].split(",");
-                    Vuelo vuelo = new Vuelo(
-                            Integer.parseInt(datosVuelo[0].trim()),
-                            datosVuelo[1].trim(),
-                            Date.valueOf(datosVuelo[2].trim()),
-                            Date.valueOf(datosVuelo[3].trim()),
-                            Integer.parseInt(datosVuelo[4].trim()),
-                            new ArrayList<>()
-                    );
-
-                    // Datos de Pago
-                    String[] datosPago = partes[5].split(",");
-                    EstadoPago estadoPago = EstadoPago.valueOf(datosPago[2].trim()); // Validar estado del pago
-                    Pago pago = new Pago(
-                            Double.parseDouble(datosPago[0].trim()),
-                            datosPago[1].trim(),
-                            estadoPago
-                    );
-
-                    // Crear y almacenar Reserva usando el Builder
-                    Reserva reserva = new ReservaBuilder()
-                            .setIdReserva(idReserva)
-                            .setEstadoReserva(estado)
-                            .setFechaReserva(fechaReserva)
-                            .setVehiculo(vehiculo)
-                            .setVuelo(vuelo)
-                            .setPago(pago)
-                            .setCliente(cliente)
-                            .build();
-
-                    reservas.put(idReserva, reserva);
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error al cargar el archivo de reservas: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el formato de las reservas o valores no válidos: " + e.getMessage());
-        }
-
-        return reservas;
     }
 }
