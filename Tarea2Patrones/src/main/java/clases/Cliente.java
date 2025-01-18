@@ -54,7 +54,7 @@ public class Cliente extends Usuario{
     
     }
     
-    public void realizarReserva(){
+    public void realizarReservaPorConsola(){
         Random rd = new Random();
         Vehiculo vh = null;
         Vuelo vl = null;

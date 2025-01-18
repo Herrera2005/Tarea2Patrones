@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import clases.Reserva;
+
 /**
  *
  * @author herreranc
@@ -19,21 +21,36 @@ public abstract class Vehiculo {
     private String TipoVehiculo;
     private String Proveedor;
     private boolean disponibilidad;
+    private Reserva reserva;
+
+    public void reservarVehiculo(Reserva reserva){
+        if (disponibilidad) {
+            disponibilidad = false;
+            this.reserva = reserva;
+        } else {
+            System.out.println("Este vehiculo ya se encuentra reservado");
+        }
+    }
+
+    //para administracion
+    public void cancelarVehiculo(String mensaje){
+        reserva.quitarVehiculo(mensaje);
+        reserva = null;
+        disponibilidad = true;
+    }
+
 
     public int getIdVehiculo() {
         return idVehiculo;
     }
 
+    
     public String getTipoVehiculo() {
         return TipoVehiculo;
     }
 
     public String getProveedor() {
         return Proveedor;
-    }
-
-    public boolean isDisponibilidad() {
-        return disponibilidad;
     }
 
     public Vehiculo(int idVehiculo, String TipoVehiculo, String Proveedor, boolean disponibilidad) {
@@ -43,8 +60,8 @@ public abstract class Vehiculo {
         this.disponibilidad = disponibilidad;
     }
 
-    public boolean verificarDisponibilidad(){
-        return true;
+    public boolean verificarDisponibilidad() {
+        return disponibilidad;
     }
 
     public abstract void confirmarVehiculo();
@@ -66,8 +83,10 @@ public abstract class Vehiculo {
                 Vehiculo vehiculo;
                 switch (tipoVehiculo) {
                     case "DeLujo" -> vehiculo = new VehiculoDeLujo(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
-                    case "Economico" -> vehiculo = new VehiculoEconomico(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
-                    case "Ejecutivo" -> vehiculo = new VehiculoEjecutivo(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
+                    case "Economico" ->
+                        vehiculo = new VehiculoEconomico(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
+                    case "Ejecutivo" ->
+                        vehiculo = new VehiculoEjecutivo(idVehiculo, tipoVehiculo, proveedor, disponibilidad);
                     default -> throw new IllegalArgumentException("Tipo de vehículo desconocido: " + tipoVehiculo);
                 }
                 vehiculos.add(vehiculo);
@@ -81,9 +100,10 @@ public abstract class Vehiculo {
 
     @Override
     public String toString() {
-        return getIdVehiculo() + "," +
-               getTipoVehiculo() + "," +
-               getProveedor() + "," +
-               isDisponibilidad();
+        return "🚗 Vehículo ID: " + getIdVehiculo() + "\n" +
+                "   🔹 Tipo: " + getTipoVehiculo() + "\n" +
+                "   🔹 Proveedor: " + getProveedor() + "\n" +
+                "   🔹 Disponibilidad: " + (verificarDisponibilidad() ? "✅ Disponible" : "❌ No disponible");
     }
+
 }

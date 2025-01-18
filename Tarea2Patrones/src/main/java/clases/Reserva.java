@@ -8,6 +8,7 @@ import claseVehiculo.*;
 import claseVuelo.*;
 import enums.EstadoReserva;
 import java.util.Date;
+import java.util.List;
 
 import Notificaciones.Notificacion;
 import claseIncidente.Incidente;
@@ -39,12 +40,21 @@ public class Reserva {
         this.cliente = cliente;
     }
 
+    public Reserva() {
+        //TODO Auto-generated constructor stub
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
 
-
-   Reserva() {}
+    // para administracion
+    public void notificarCliente(String mensaje){
+        List<Notificacion> notificaciones = cliente.getNotificaciones();
+        for (Notificacion notificacion : notificaciones) {
+            notificacion.notificar(mensaje, cliente);
+        }
+    }
 
     public void asociarCliente(Cliente cliente ){
         this.cliente = cliente;
@@ -53,6 +63,11 @@ public class Reserva {
 
     public int getIdReserva() {
         return idReserva;
+    }
+
+    public void quitarVehiculo(String mensaje){
+        vehiculo = null;
+        notificarCliente(mensaje);
     }
 
     public EstadoReserva getEstadoReserva() {
@@ -103,8 +118,8 @@ public class Reserva {
     
     }
     
-    public void cancelarReserva(){
-    
+    public void cancelarReserva(String mensaje){
+        vehiculo.cancelarVehiculo(mensaje);
     }
     public void crearIncidente(){
         new Incidente();
