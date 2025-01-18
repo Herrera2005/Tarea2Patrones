@@ -39,31 +39,12 @@ public class Tarea2Patrones {
     private static final String ADMIN_TXT = "admin.txt";
     private static final String SOPORTE_TXT = "soporte.txt";
     private static final String RESERVAS_TXT = "reservas.txt";
+    
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("=== Menú Principal ===");
-            System.out.println("1. Ingresar como Cliente");
-            System.out.println("2. Ingresar como Administración");
-            System.out.println("3. Ingresar como Soporte");
-            System.out.println("4. Salir");
-            System.out.print("Selecciona una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
-
-            switch (opcion) {
-                case 1 -> iniciarSesionCliente(scanner, CLIENTE_TXT);
-                case 2 -> iniciarSesion(scanner, ADMIN_TXT, "Administración", Tarea2Patrones::menuAdministracion);
-                case 3 -> iniciarSesion(scanner, SOPORTE_TXT, "Soporte", Tarea2Patrones::menuSoporte);
-                case 4 -> {
-                    System.out.println("¡Gracias por usar el sistema!");
-                    return;
-                }
-                default -> System.out.println("Opción no válida. Intenta de nuevo.");
-            }
-        }
+         Servicio servicio = new Servicio();
+         servicio.Iniciar(CLIENTE_TXT, ADMIN_TXT, SOPORTE_TXT, RESERVAS_TXT);
     }
 
     private static void iniciarSesion(Scanner scanner, String archivo, String tipoUsuario, Runnable menuUsuario) throws IOException {
@@ -149,34 +130,7 @@ public class Tarea2Patrones {
         }
     }
 
-    private static boolean validarCredenciales(String usuario, String contraseña, String archivo) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] partes = linea.split(":");
-                if (partes.length == 2 && partes[0].equals(usuario) && partes[1].equals(contraseña)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private static void crearArchivoSiNoExiste(String archivo) throws IOException {
-        File file = new File(archivo);
-        if (!file.exists()) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-                if (archivo.equals(CLIENTE_TXT)) {
-                    bw.write("cliente:client\n");
-                } else if (archivo.equals(ADMIN_TXT)) {
-                    bw.write("admin:admin\n");
-                } else if (archivo.equals(SOPORTE_TXT)) {
-                    bw.write("soporte:support\n");
-                }
-            }
-        }
-    }
-
+    
     private static void menuCliente(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;

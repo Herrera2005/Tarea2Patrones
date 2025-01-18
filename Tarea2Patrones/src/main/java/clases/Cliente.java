@@ -54,7 +54,8 @@ public class Cliente extends Usuario{
     public Reserva realizarReserva(){
         Random rd = new Random();
         Vehiculo vd;
-        Reserva reserva = new Reserva(rd.nextInt(Integer.MAX_VALUE),EstadoReserva.RESERVADO,LocalDate.now(),vd,)
+        Reserva reserva = new Reserva(rd.nextInt(Integer.MAX_VALUE),EstadoReserva.RESERVADO,LocalDate.now(),vd,);
+        return reserva;
     }
 
     public List<Notificacion> getNotificaciones(){
