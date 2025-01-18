@@ -66,10 +66,10 @@ public abstract class Vehiculo {
 
     public abstract void confirmarVehiculo();
 
-    public static List<Vehiculo> getVehiculos(String archivo) {
+    public static List<Vehiculo> getVehiculos() {
         List<Vehiculo> vehiculos = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Vehiculos.txt"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {

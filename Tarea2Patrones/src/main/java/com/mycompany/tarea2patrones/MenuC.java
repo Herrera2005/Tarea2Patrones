@@ -159,27 +159,70 @@ public class MenuC {
     }
     private static void crearReserva(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Introduce el ID de la reserva: ");
-        int idReserva = scanner.nextInt();
-        scanner.nextLine();
+         
+        int idReserva=0 ;
+        try (BufferedReader br = new BufferedReader(new FileReader("reservas.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] cadena = linea.split(":");
+                idReserva =Integer.parseInt(cadena[0])+1;
+                
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+        }
 
         System.out.println("Introduce la fecha de la reserva (YYYY-MM-DD): ");
         Date fechaReserva = Date.valueOf(scanner.nextLine());
-
-        System.out.println("Selecciona un vehículo (ID): ");
-        int idVehiculo = scanner.nextInt();
-        scanner.nextLine();
-        Vehiculo vehiculo = new VehiculoEconomico(idVehiculo, "MarcaX", "ModeloY", true);
-
-        System.out.println("Introduce los detalles del vuelo: ");
-        Vuelo vuelo = new Vuelo(1, "AerolineaX", fechaReserva, fechaReserva, 100, new ArrayList<>());
+        
+        List<Vehiculo> vehiculos = Vehiculo.getVehiculos();
+        Vehiculo vehiculo= null;
+        do{
+            int i =1;
+            for (Vehiculo vehicul : vehiculos){
+                System.out.println(i+".-"+vehicul.getTipoVehiculo()+ ", "+vehicul.getProveedor());
+                i++;
+            }
+            System.out.println("Selecciona un vehículo (numero de lista): ");
+            int idVehiculo = scanner.nextInt();
+            scanner.nextLine();
+            if( idVehiculo<i){
+                vehiculo = vehiculos.get(idVehiculo-1);
+            }
+        }while(vehiculo ==null);
+        
+        List<Vuelo> vuelos= Vuelo.cargarVuelosDesdeArchivo();
+        Vuelo vuelo= null;
+        do{
+            int i =1;
+            for (Vuelo vuel : vuelos){
+                System.out.println(i+".-"+vuel.getAerolinea()+ ", hora de salida: "+vuel.getHoraSalida()+", hora de llegada: "+vuel.getHoraLlegada());
+                i++;
+            }
+            System.out.println("Selecciona un Vuelo (numero de lista): ");
+            int idVuelo = scanner.nextInt();
+            scanner.nextLine();
+            if( idVuelo<i){
+                vuelo = vuelos.get(idVuelo-1);
+            }
+        }while(vuelo ==null);
+        
 
         System.out.println("Introduce el monto del pago: ");
         double monto = scanner.nextDouble();
         scanner.nextLine();
-        System.out.println("Introduce el método de pago: ");
-        String metodoPago = scanner.nextLine();
+        String metodoPago=null;
+        do{
+            String cadena ="1.-Tarjeta de credito.\n2.-Paypal.\n3.-otros metodos. ";
+            System.out.println(cadena);
+            System.out.println("Introduce el método de pago (numero): ");
+            int num = scanner.nextInt();
+            scanner.nextLine();
+            if(num<=3){
+                metodoPago= cadena.split(".")[num*2-1];
+            }
+            
+        }while(metodoPago ==null);
         Pago pago = new Pago(monto, metodoPago, EstadoPago.PENDIENTE);
 
         Reserva nuevaReserva = new ReservaBuilder()

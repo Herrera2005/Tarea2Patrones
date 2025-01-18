@@ -126,11 +126,11 @@ public class Vuelo {
     
     }
     
-    public static List<Vuelo> cargarVuelosDesdeArchivo(String archivo) {
+    public static List<Vuelo> cargarVuelosDesdeArchivo() {
         List<Vuelo> vuelos = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Vuelos.txt"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
