@@ -1,6 +1,8 @@
 package com.mycompany.tarea2patrones;
 
+import clases.Autenticacion;
 import clases.Cliente;
+import clases.GestorClientes;
 import clases.Reserva;
 
 import java.util.List;
@@ -63,23 +65,14 @@ public class Servicio {
         MenuAd.menuAdministracion(reservas, vuelos, vehiculos);
     }
 
-    public void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
-        System.out.println("=== Inicio de sesión para Cliente ===");
-        if (clientes.isEmpty()) {
-            System.out.println("No hay clientes disponibles.");
-            return;
-        }
-        mostrarClientes();
+    private void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
+        GestorClientes gestorClientes = new GestorClientes(clientes);
+        Autenticacion autenticacion = new Autenticacion(gestorClientes);
 
-        int opcion = leerOpcion();
-        if (opcion < 1 || opcion > clientes.size()) {
-            System.out.println("Opción no válida. Intenta de nuevo.");
-            return;
+        Cliente clienteSeleccionado = autenticacion.iniciarSesionCliente(scanner);
+        if (clienteSeleccionado != null) {
+            MenuC.menuCliente(clienteSeleccionado, vehiculos, vuelos);
         }
-
-        Cliente clienteSeleccionado = clientes.get(opcion - 1);
-        System.out.println("¡Inicio de sesión exitoso como Cliente!");
-        MenuC.menuCliente(clienteSeleccionado, vehiculos, vuelos);
     }
 
     private void mostrarClientes() {
