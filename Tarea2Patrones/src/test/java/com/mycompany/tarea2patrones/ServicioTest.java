@@ -9,6 +9,8 @@ import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Vuelo;
 import clases.Cliente;
 import clases.Reserva;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -32,6 +34,8 @@ class ServicioTest {
     private List<Vuelo> vuelos;
     private List<Vehiculo> vehiculos;
 
+    private MockInputProvider inputProvider;
+
     @BeforeEach
     void setUp() {
         Cliente cliente1 = new Cliente(1, "Juan Perez", "12345@h", "s");
@@ -41,17 +45,16 @@ class ServicioTest {
         vuelos = Arrays.asList(new Vuelo(1, "AeroTest", new Date(), new Date(), 10, new ArrayList<>()));
         vehiculos = Arrays.asList(new VehiculoEconomico(1, "Económico", "ProveedorX", true));
 
-        // Inyectamos un Scanner vacío para evitar entrada manual
-        servicio = new Servicio(clientes, new Scanner(""));
+        inputProvider = new MockInputProvider();
+        servicio = new Servicio(clientes, inputProvider.getScanner());
     }
 
     @Test
     void testIniciarSesionAdministracion() {
-        // Simula la entrada de usuario con un número de administrador correcto
-        Scanner scanner = new Scanner("admin\n1234\n"); // Admin y clave correcta
-        servicio = new Servicio(clientes, scanner);
-
+        // Simula la entrada del usuario para administrador correcto
+        inputProvider.setInputs("admin", "1234");
         System.out.println("Administrador - Inicio de Sesión");
+
         servicio.iniciarSesionAdministracion(reservas, vuelos, vehiculos);
 
         assertNotNull(reservas);
@@ -61,34 +64,46 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionCliente() {
-        // Simula la entrada de usuario: selecciona cliente "Juan Perez"
-        Scanner scanner = new Scanner("1\n");
-        servicio = new Servicio(clientes, scanner);
-
+        // Simula la selección del cliente "Juan Perez"
+        inputProvider.setInputs("1", "4");
         System.out.println("Cliente - Inicio de Sesión");
-        servicio.iniciarSesionCliente(scanner, vuelos, vehiculos);
+
+        servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
 
         assertEquals("Juan Perez", clientes.get(0).getNombre());
     }
 
     @Test
     void testIniciarSesionClienteOpcionInvalida() {
-        // Simula la entrada de una opción inválida
-        Scanner scanner = new Scanner("3\n"); // No hay cliente con ID 3
-        servicio = new Servicio(clientes, scanner);
+        // Simula una opción inválida
+        inputProvider.setInputs("3"); // No hay cliente con ID 3
 
-        servicio.iniciarSesionCliente(scanner, vuelos, vehiculos);
-        // No se puede iniciar sesión, así que verificamos que no cambia el estado
+        servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
         assertFalse(clientes.stream().anyMatch(c -> c.getId() == 3));
     }
 
     @Test
     void testIniciarSesionClienteInputNoNumerico() {
         // Simula entrada de texto no numérico
-        Scanner scanner = new Scanner("abc\n");
-        servicio = new Servicio(clientes, scanner);
+        inputProvider.setInputs("abc");
 
-        // Se espera que lance una excepción por entrada inválida
-        assertThrows(Exception.class, () -> servicio.iniciarSesionCliente(scanner, vuelos, vehiculos));
+        assertThrows(Exception.class, () -> servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos));
+    }
+
+    /**
+     * MockInputProvider permite definir entradas simuladas para reemplazar Scanner.
+     */
+    private static class MockInputProvider {
+        private final Queue<String> inputs = new LinkedList<>();
+
+        void setInputs(String... inputs) {
+            this.inputs.clear();
+            this.inputs.addAll(Arrays.asList(inputs));
+        }
+
+        Scanner getScanner() {
+            String simulatedInput = String.join("\n", inputs) + "\n";
+            return new Scanner(new ByteArrayInputStream(simulatedInput.getBytes()));
+        }
     }
 }
