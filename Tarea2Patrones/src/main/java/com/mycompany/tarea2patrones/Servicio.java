@@ -71,7 +71,7 @@ public class Servicio {
         }
         mostrarClientes();
 
-        int opcion = leerOpcion();
+        int opcion = scanner.nextInt();
         if (opcion < 1 || opcion > clientes.size()) {
             System.out.println("Opción no válida. Intenta de nuevo.");
             return;

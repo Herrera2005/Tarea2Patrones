@@ -210,5 +210,8 @@ public void addNotificacion(Notificacion notificacion) {
     }
     this.notificaiones.add(notificacion);
 }
+public int getId() {
+        return super.getIdCedula(); // Si 'idCedula' está en Usuario, se accede con un getter
+    }
 
 }

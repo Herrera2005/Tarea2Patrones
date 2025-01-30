@@ -47,16 +47,15 @@ public class Tarea2Patrones {
     
 
     public static void main(String[] args) throws IOException {
-    ClientLoader clientes = new ClientLoader();
-    SistemaReservasVehiculo vehiculos = new SistemaReservasVehiculo();
-    SistemaReservasVuelo vuelos = new SistemaReservasVuelo();
-    SistemaReservas reservas = new SistemaReservas(vehiculos.getVehiculos(),vuelos.getVuelos(),clientes.getClientes());
-    
-    reservas.mostrarReservas();
-    Servicio s = new Servicio((List<Cliente>) clientes, new Scanner(System.in));
-    s.iniciar(reservas.getReservas(),vuelos.getVuelos(),vehiculos.getVehiculos());
-
+        ClientLoader clientes = new ClientLoader(); // Assuming this loads the client data
+        SistemaReservasVehiculo vehiculos = new SistemaReservasVehiculo();
+        SistemaReservasVuelo vuelos = new SistemaReservasVuelo();
+        SistemaReservas reservas = new SistemaReservas(vehiculos.getVehiculos(), vuelos.getVuelos(), clientes.getClientes()); // Pass the List<Cliente> to the constructor
+        
+        reservas.mostrarReservas();
+        
+        // Assuming clientes.getClientes() returns a List<Cliente>
+        Servicio s = new Servicio(clientes.getClientes(), new Scanner(System.in)); // No need to cast
+        s.iniciar(reservas.getReservas(), vuelos.getVuelos(), vehiculos.getVehiculos());
     }
-
-    
 }
