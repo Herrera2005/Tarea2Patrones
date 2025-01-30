@@ -36,44 +36,72 @@ import java.util.Scanner;
  */
 public class MenuC {
     
-    public static void menuCliente(Cliente cliente,List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
+    public static void menuCliente(Cliente cliente, List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
+
         while (!salir) {
-            System.out.println("=== Menú Cliente ===");
+            System.out.println("\n=== Menú Cliente ===");
             System.out.println("1. Ver reservas");
             System.out.println("2. Realizar nueva reserva");
             System.out.println("3. Eliminar reserva");
             System.out.println("4. Salir");
             System.out.print("Selecciona una opción: ");
+
+            // Verificar si la entrada es numérica
+            if (!scanner.hasNextInt()) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                scanner.next(); // Descartar entrada incorrecta
+                continue;
+            }
+
             int opcion = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            System.out.println("Debug: Opción ingresada -> " + opcion); // Mensaje de depuración
 
             switch (opcion) {
-                case 1 -> mostrarReservas(cliente);
-                case 2 -> cliente.realizarReservaPorConsola(vehiculos, vuelos);
-                case 3 -> Cliente.cancelarReserva(cliente);
-                case 4 -> {
+                case 1:
+                    System.out.println("Debug: Mostrando reservas...");
+                    mostrarReservas(cliente);
+                    break;
+                case 2:
+                    System.out.println("Debug: Realizando nueva reserva...");
+                    cliente.realizarReservaPorConsola(vehiculos, vuelos);
+                    break;
+                case 3:
+                    System.out.println("Debug: Eliminando reserva...");
+                    eliminarReserva(cliente);
+                    break;
+                case 4:
                     System.out.println("Saliendo del menú cliente...");
                     salir = true;
-                }
-                default -> System.out.println("Opción no válida. Intenta de nuevo.");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intenta de nuevo.");
             }
         }
     }
 
-   private static void eliminarReserva(Cliente cliente) {
+    private static void eliminarReserva(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Eliminar Reserva ===");
+        System.out.println("\n=== Eliminar Reserva ===");
         mostrarReservas(cliente);
+
         if (cliente.getReservas().isEmpty()) {
+            System.out.println("No tienes reservas para eliminar.");
             return;
         }
 
         System.out.print("Introduce el ID de la reserva que deseas eliminar: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Error: Debes ingresar un número válido.");
+            scanner.next(); // Descartar entrada incorrecta
+        }
+
         int idReserva = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Consumir el salto de línea
 
         Reserva reservaAEliminar = null;
         for (Reserva reserva : cliente.getReservas()) {
@@ -85,23 +113,17 @@ public class MenuC {
 
         if (reservaAEliminar != null) {
             cliente.eliminarReserva(idReserva);
-
-
             System.out.println("Reserva eliminada exitosamente.");
         } else {
             System.out.println("No se encontró una reserva con ese ID.");
         }
     }
 
-
-    
-
-
-      
     public static void mostrarReservas(Cliente cliente) {
+        System.out.println("\n=== Tus Reservas ===");
+
         List<Reserva> reservas = cliente.getReservas();
-        System.out.println("=== Tus Reservas ===");
-        if (reservas.isEmpty()) {
+        if (reservas == null || reservas.isEmpty()) {
             System.out.println("No tienes reservas registradas.");
             return;
         }
