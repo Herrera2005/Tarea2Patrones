@@ -53,8 +53,8 @@ public class Tarea2Patrones {
     SistemaReservas reservas = new SistemaReservas(vehiculos.getVehiculos(),vuelos.getVuelos(),clientes.getClientes());
     
     reservas.mostrarReservas();
-    Servicio s = new Servicio(clientes.getClientes());
-    s.Iniciar(reservas.getReservas(),vuelos.getVuelos(),vehiculos.getVehiculos());
+    Servicio s = new Servicio((List<Cliente>) clientes, new Scanner(System.in));
+    s.iniciar(reservas.getReservas(),vuelos.getVuelos(),vehiculos.getVehiculos());
 
     }
 

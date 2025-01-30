@@ -14,27 +14,21 @@ import claseVuelo.Vuelo;
  * @author RUCO HOUSE
  */
 public class Servicio {
+    private final List<Cliente> clientes;
+    private final Scanner scanner;
 
-    private List<Cliente> clientes;
-
-    public Servicio(List<Cliente> clientes) {
+    public Servicio(List<Cliente> clientes, Scanner scanner) {
         this.clientes = clientes;
+        this.scanner = scanner;
     }
 
-    public void Iniciar(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
-        Scanner scanner = new Scanner(System.in);
-
+    public void iniciar(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
         while (true) {
-            System.out.println("=== Menú Principal ===");
-            System.out.println("1. Ingresar como Cliente");
-            System.out.println("2. Ingresar como Administración");
-            System.out.println("3. Salir");
-            System.out.print("Selecciona una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+            mostrarMenuPrincipal();
+            int opcion = leerOpcion();
 
             switch (opcion) {
-                case 1 -> iniciarSesionCliente(scanner,vuelos,vehiculos);
+                case 1 -> iniciarSesionCliente(scanner, vuelos, vehiculos);
                 case 2 -> iniciarSesionAdministracion(reservas, vuelos, vehiculos);
                 case 3 -> {
                     System.out.println("¡Gracias por usar el sistema!");
@@ -45,42 +39,54 @@ public class Servicio {
         }
     }
 
-    private void iniciarSesionAdministracion(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
-        System.out.println("=== Acceso a Administración ===");
-        System.out.println("¡Acceso otorgado sin necesidad de usuario ni contraseña!");
-
-        // Mostrar menú de administración
-        MenuAd.menuAdministracion(reservas,vuelos,vehiculos);
+    private void mostrarMenuPrincipal() {
+        System.out.println("=== Menú Principal ===");
+        System.out.println("1. Ingresar como Cliente");
+        System.out.println("2. Ingresar como Administración");
+        System.out.println("3. Salir");
+        System.out.print("Selecciona una opción: ");
     }
 
-        
-
-    private void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
-        System.out.println("=== Inicio de sesión para Cliente ===");
-        System.out.println("Selecciona un cliente para iniciar sesión:");
-
-        // Mostrar lista de todos los clientes disponibles
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente cliente = clientes.get(i);
-            System.out.println((i + 1) + ". " + cliente.getNombre() + " (ID: " + cliente.getIdCedula() + ")");
+    private int leerOpcion() {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Entrada no válida. Intenta de nuevo.");
+            scanner.next();
         }
-
-        System.out.print("Selecciona el número del cliente: ");
         int opcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
+        scanner.nextLine();
+        return opcion;
+    }
 
+    public void iniciarSesionAdministracion(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
+        System.out.println("=== Acceso a Administración ===");
+        System.out.println("¡Acceso otorgado sin necesidad de usuario ni contraseña!");
+        MenuAd.menuAdministracion(reservas, vuelos, vehiculos);
+    }
+
+    public void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
+        System.out.println("=== Inicio de sesión para Cliente ===");
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes disponibles.");
+            return;
+        }
+        mostrarClientes();
+
+        int opcion = leerOpcion();
         if (opcion < 1 || opcion > clientes.size()) {
             System.out.println("Opción no válida. Intenta de nuevo.");
             return;
         }
 
         Cliente clienteSeleccionado = clientes.get(opcion - 1);
-
-        // Omitimos la contraseña y continuamos con el inicio de sesión directamente
         System.out.println("¡Inicio de sesión exitoso como Cliente!");
+        MenuC.menuCliente(clienteSeleccionado, vehiculos, vuelos);
+    }
 
-     
-        // Mostrar el menú del cliente
-        MenuC.menuCliente(clienteSeleccionado,vehiculos,vuelos);
+    private void mostrarClientes() {
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            System.out.println((i + 1) + ". " + cliente.getNombre() + " (ID: " + cliente.getIdCedula() + ")");
+        }
+        System.out.print("Selecciona el número del cliente: ");
     }
 }
