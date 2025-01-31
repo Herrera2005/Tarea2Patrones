@@ -1,19 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.tarea2patrones;
 
+import Interfaces.AccionMenu;
+import Interfaces.EscalarIncidente;
+import Interfaces.Salir;
+import Interfaces.VerIncidentes;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-/**
- *
- * @author RUCO HOUSE
- */
 public class MenuSo {
-    public static void menuSoporte() {
+    private Map<Integer, AccionMenu> acciones;
+
+    public MenuSo() {
+        acciones = new HashMap<>();
+        acciones.put(1, new VerIncidentes());
+        acciones.put(2, new EscalarIncidente());
+        acciones.put(3, new Salir());
+    }
+
+    public void menuSoporte() {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
+
         while (!salir) {
             System.out.println("=== Menú Soporte ===");
             System.out.println("1. Ver incidentes");
@@ -23,14 +32,14 @@ public class MenuSo {
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            switch (opcion) {
-                case 1 -> System.out.println("Mostrando incidentes...");
-                case 2 -> System.out.println("Escalando incidente...");
-                case 3 -> {
-                    System.out.println("Saliendo del menú soporte...");
+            AccionMenu accion = acciones.get(opcion);
+            if (accion != null) {
+                accion.ejecutar();
+                if (accion instanceof Salir) {
                     salir = true;
                 }
-                default -> System.out.println("Opción no válida. Intenta de nuevo.");
+            } else {
+                System.out.println("Opción no válida. Intenta de nuevo.");
             }
         }
     }
