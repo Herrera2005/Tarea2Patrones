@@ -26,6 +26,11 @@ public class NotificacionEmail implements Notificacion {
         
     }
 
+    @Override
+    public String getMensaje() {
+        return correo;
+    }
+
 
 
 }

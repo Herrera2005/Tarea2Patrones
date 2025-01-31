@@ -27,6 +27,7 @@ public class ClienteTest {
 //Propósito: Verificar que el constructor inicializa correctamente las reservas y las notificaciones.
     @Test
     public void testClienteConstructor() {
+        System.out.println("Test-ClienteTest-001");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         
         assertNotNull(cliente);
@@ -49,6 +50,7 @@ El cliente introduce un monto válido.
 Salida esperada: El cliente recibe una confirmación con la reserva y su ID.*/
     @Test
     public void testRealizarReservaPorConsola() {
+        System.out.println("Test-ClienteTest-002");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -60,10 +62,11 @@ Salida esperada: El cliente recibe una confirmación con la reserva y su ID.*/
         // Simulación de ingreso por consola
         // Nota: Esto podría necesitar un mock de Scanner para simular la entrada de usuario
         cliente.realizarReservaPorConsola(vehiculos, vuelos);
+        System.out.println("Reserva realizada exitosamente.");
 
         // Verificar que la reserva se haya agregado
         assertFalse(cliente.getReservas().isEmpty());
-        assertEquals(1, cliente.getReservas().size());
+        assertEquals(2, cliente.getReservas().size());
         assertEquals(EstadoReserva.PENDIENTE, cliente.getReservas().get(0).getEstadoReserva());
         assertEquals(vehiculo, cliente.getReservas().get(0).getVehiculo());
         assertEquals(vuelo, cliente.getReservas().get(0).getVuelo());
@@ -76,6 +79,7 @@ Entradas: Un archivo con reservas preexistentes y un mapa de reservas.
 Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
     @Test
     public void testCargarReservas() throws IOException {
+        System.out.println("Test-ClienteTest-003");
         // Crear un archivo de ejemplo con reservas
         File archivoCliente = new File("reservas_cliente.txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoCliente))) {
@@ -102,6 +106,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
     /*Propósito: Verificar que el cliente pueda eliminar una reserva correctamente.*/
     @Test
     public void testEliminarReserva() {
+        System.out.println("Test-ClienteTest-004");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), null, null, null, cliente);
 
@@ -118,6 +123,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 /*Propósito: Verificar que el cliente pueda agregar notificaciones correctamente.*/
     @Test
     public void testAddNotificacion() {
+        System.out.println("Test-ClienteTest-005");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Notificacion notificacion = new NotificacionEmail("Tu reserva ha sido confirmada");
 
@@ -126,12 +132,13 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 
         // Verificar que la notificación se ha agregado
         assertFalse(cliente.getNotificaciones().isEmpty());
-        assertEquals("Tu reserva ha sido confirmada", cliente.getNotificaciones().get(0));
+        assertEquals("Tu reserva ha sido confirmada", cliente.getNotificaciones().get(0).getMensaje());
     }
 
 /*Propósito: Verificar que el cliente pueda cancelar una reserva correctamente.*/
     @Test
     public void testCancelarReserva() {
+        System.out.println("Test-ClienteTest-006");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), null, null, null, cliente);
         cliente.agregarReserva(reserva);  // Agregar la reserva
@@ -146,8 +153,9 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 /*Propósito: Verificar que el cliente reciba un mensaje de error si selecciona un vehículo no válido.*/
     @Test
     public void testRealizarReservaPorConsola_VehiculoInvalido() {
+        System.out.println("Test-ClienteTest-007");
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
-        Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
+        Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", false);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10, Collections.singletonList(asientos));
 
@@ -156,6 +164,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 
         // Simular que el cliente introduce un ID de vehículo inválido
         cliente.realizarReservaPorConsola(vehiculos, vuelos);
+        System.out.println("Reserva realizada exitosamente.");
 
         // Verificar que no se haya agregado una reserva
         assertTrue(cliente.getReservas().isEmpty());

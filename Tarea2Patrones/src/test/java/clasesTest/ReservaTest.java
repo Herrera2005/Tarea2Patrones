@@ -37,6 +37,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaExitosa() {
+        System.out.println("Test-ReservaTest-001");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -58,6 +59,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaYaConfirmada() {
+        System.out.println("Test-ReservaTest-002");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -79,6 +81,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaSinPago() {
+        System.out.println("Test-ReservaTest-003");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -102,6 +105,7 @@ public class ReservaTest {
 
     @Test
     public void testGetIdReservaExitosa() {
+        System.out.println("Test-ReservaTest-004");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -120,6 +124,7 @@ public class ReservaTest {
 
     @Test
     public void testGetIdReservaConIdNegativo() {
+        System.out.println("Test-ReservaTest-005");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -140,6 +145,7 @@ public class ReservaTest {
 
     @Test
     public void testModificarReservaExitosa() {
+        System.out.println("Test-ReservaTest-006");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -159,6 +165,7 @@ public class ReservaTest {
 
     @Test
     public void testModificarReservaConTextoVacio() {
+        System.out.println("Test-ReservaTest-007");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -182,6 +189,7 @@ public class ReservaTest {
 
     @Test
     public void testCancelarReservaExitosa() {
+        System.out.println("Test-ReservaTest-008");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -189,7 +197,7 @@ public class ReservaTest {
         Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         reserva.cancelarReserva("");
-        assertEquals(EstadoReserva.CANCELADA, reserva.getEstadoReserva());
+        assertEquals(EstadoReserva.CANCELADO, reserva.getEstadoReserva());
     }
     
 //Escenario de falla: Intento de cancelar reserva ya cancelada
@@ -201,12 +209,13 @@ public class ReservaTest {
 
     @Test
     public void testCancelarReservaYaCancelada() {
+        System.out.println("Test-ReservaTest-009");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10, Collections.singletonList(asientos));
         Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
-        Reserva reserva = new Reserva(1, EstadoReserva.CANCELADA, new Date(), vehiculo, vuelo, pago, cliente);
+        Reserva reserva = new Reserva(1, EstadoReserva.CANCELADO, new Date(), vehiculo, vuelo, pago, cliente);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             reserva.cancelarReserva("");

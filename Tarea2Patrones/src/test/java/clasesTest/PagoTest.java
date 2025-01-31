@@ -24,10 +24,11 @@ public class PagoTest {
 
     @Test
     public void testPagoCreacionExitosa() {
+        System.out.println("Test-PagoTest-001");
         Pago pago = new Pago(150.0, MetodoPago.TARJETA, EstadoPago.CONFIRMADO);
 
         assertEquals(150.0, pago.getMonto());
-        assertEquals("Tarjeta de Crédito", pago.getMetodoPago());
+        assertEquals(MetodoPago.TARJETA, pago.getMetodoPago());
         assertEquals(EstadoPago.CONFIRMADO, pago.getEstadoPago());
     }
    
@@ -40,6 +41,7 @@ public class PagoTest {
 
     @Test
     public void testPagoConMontoNegativo() {
+        System.out.println("Test-PagoTest-002");
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Pago(-50.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);
         });
@@ -56,6 +58,7 @@ public class PagoTest {
 
     @Test
     public void testPagoConMetodoInvalido() {
+        System.out.println("Test-PagoTest-003");
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Pago(100.0, MetodoPago.EFECTIVO, EstadoPago.PENDIENTE);
         });

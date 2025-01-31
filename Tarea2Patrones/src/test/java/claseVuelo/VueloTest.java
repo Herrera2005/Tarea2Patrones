@@ -29,6 +29,7 @@ class VueloTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        System.out.println("Test-VueloTest-001");
         Date horaSalida = sdf.parse("10-10-2025");
         Date horaLlegada = sdf.parse("11-10-2025");
         List<Asiento> asientos = new ArrayList<>();
@@ -41,6 +42,7 @@ class VueloTest {
      */
     @Test
     void testAnadirPasajero() {
+        System.out.println("Test-VueloTest-002");
         vuelo.anadirPasajero(cliente);
         assertEquals(9, vuelo.getAsientosDisponibles());
     }
@@ -50,6 +52,7 @@ class VueloTest {
      */
     @Test
     void testAnadirPasajeroSinAsientos() {
+        System.out.println("Test-VueloTest-003");
         for (int i = 0; i < 10; i++) {
             vuelo.anadirPasajero(new Cliente(1,"Juan Perez", "12345@h","s"));
         }
@@ -61,6 +64,7 @@ class VueloTest {
      */
     @Test
     void testVerificarDisponibilidad() {
+        System.out.println("Test-VueloTest-004");
         assertTrue(vuelo.verificarDisponibilidad());
     }
 
@@ -70,6 +74,8 @@ class VueloTest {
     @Test
     void testVerificarDisponibilidadSinAsientos() {
         for (int i = 0; i < 10; i++) {
+            
+        System.out.println("Test-VueloTest-005");
             vuelo.anadirPasajero(new Cliente(1,"Juan Perez", "12345@h","s"));
         }
         assertFalse(vuelo.verificarDisponibilidad());

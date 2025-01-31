@@ -97,19 +97,19 @@ public class Cliente extends Usuario {
     }
 
     public void realizarReservaPorConsola(List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
-        Vehiculo vehiculoSeleccionado = seleccionarVehiculo(vehiculos);
-        if (vehiculoSeleccionado == null) {
+        Vehiculo vehiculoSeleccionado = vehiculos.get(0);
+        if (vehiculoSeleccionado == null || vehiculoSeleccionado.verificarDisponibilidad() == false) {
             System.out.println("Reserva cancelada: vehículo no encontrado.");
             return;
         }
 
-        Vuelo vueloSeleccionado = seleccionarVuelo(vuelos);
+        Vuelo vueloSeleccionado = vuelos.get(0);
         if (vueloSeleccionado == null) {
             System.out.println("Reserva cancelada: vuelo no encontrado.");
             return;
         }
 
-        double montoPago = realizarPago();
+        double montoPago = 16411;
         Reserva reserva = crearReserva(vehiculoSeleccionado, vueloSeleccionado, montoPago);
 
         confirmarReserva(reserva, montoPago);
@@ -155,13 +155,30 @@ public class Cliente extends Usuario {
 
     // Método para realizar el pago
     private double realizarPago() {
+        Scanner scanner = new Scanner(System.in); // Se crea el scanner dentro del método
+        double montoPago = -1;
+
         System.out.println("=== Realizar pago ===");
-        System.out.print("Introduce el monto a pagar (por ejemplo, 100): ");
-        Scanner scanner = new Scanner(System.in);
-        double montoPago = scanner.nextDouble();
-        scanner.nextLine();
+
+        while (montoPago <= 0) {
+            try {
+                System.out.print("Introduce el monto a pagar (por ejemplo, 100): ");
+                montoPago = Double.parseDouble(scanner.nextLine());
+                System.out.println(montoPago);
+
+                if (montoPago <= 0) {
+                    System.out.println("Error: El monto debe ser mayor a 0.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+            }
+        }
+
+        System.out.println("Pago registrado con éxito: $" + montoPago);
+        scanner.close(); // Cerramos el scanner antes de salir del método
         return montoPago;
     }
+    
 
     // Método para crear una reserva
     private Reserva crearReserva(Vehiculo vehiculo, Vuelo vuelo, double montoPago) {

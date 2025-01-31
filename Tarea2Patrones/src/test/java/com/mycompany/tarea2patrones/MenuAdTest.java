@@ -48,6 +48,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarReservas_CancelarReserva_Existente() {
+        System.out.println("Test-MenuAdTest-001");
         Reserva reserva = new Reserva(1, EstadoReserva.CONFIRMADO, new Date(), null, null, null, new Cliente(1, "Juan Perez", "12345@h", "s"));
         reservas.add(reserva);
 
@@ -59,6 +60,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarReservas_CancelarReserva_NoExistente() {
+        System.out.println("Test-MenuAdTest-002");
         inputProvider.setInputs("1", "99"); // Opción 1: Cancelar, ID 99 no existe
         menuAd.menuAdministracion(reservas, vuelos, vehiculos);
 
@@ -67,6 +69,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarVuelos_CancelarVuelo_Existente() {
+        System.out.println("Test-MenuAdTest-003");
         Vuelo vuelo = new Vuelo(1, "AerolineaX", new Date(), new Date(), 100, new ArrayList<>());
         vuelos.add(vuelo);
         Cliente cliente = new Cliente(1, "Juan Perez", "12345@h", "s");
@@ -83,6 +86,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarVuelos_CancelarVuelo_NoExistente() {
+        System.out.println("Test-MenuAdTest-004");
         inputProvider.setInputs("2", "99"); // Opción 2: Gestionar vuelos, ID 99 no existe
         menuAd.menuAdministracion(reservas, vuelos, vehiculos);
 
@@ -91,6 +95,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarVehiculos_CancelarVehiculo_Existente() {
+        System.out.println("Test-MenuAdTest-005");
         Vehiculo vehiculo = new VehiculoEconomico(1, "SUV", "ProveedorX", true);
         vehiculos.add(vehiculo);
         Cliente cliente = new Cliente(1, "Juan Perez", "12345@h", "s");
@@ -108,6 +113,7 @@ class MenuAdTest {
 
     @Test
     void testGestionarVehiculos_CancelarVehiculo_NoExistente() {
+        System.out.println("Test-MenuAdTest-006");
         inputProvider.setInputs("3", "99"); // Opción 3: Gestionar vehículos, ID 99 no existe
         menuAd.menuAdministracion(reservas, vuelos, vehiculos);
 

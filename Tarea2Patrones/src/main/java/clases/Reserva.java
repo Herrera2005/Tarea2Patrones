@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import Notificaciones.Notificacion;
+import Notificaciones.NotificacionEmail;
 import claseIncidente.Incidente;
 
 /**
@@ -115,7 +116,7 @@ public class Reserva {
     }
 
     public void confirmarReserva() {
-
+        estadoReserva =EstadoReserva.CONFIRMADO;
     }
 
     public void cancelarReserva(String mensaje) {
@@ -128,9 +129,11 @@ public class Reserva {
     }
 
     public void modificarReserva(String mensaje) {
-
-        for (Notificacion notificacion : cliente.getNotificaciones()) {
-            notificacion.notificar(mensaje, cliente);
+        Notificacion notificacion = new NotificacionEmail("mensaje");
+        cliente.addNotificacion(notificacion);
+        cliente.addNotificacion(notificacion);
+        for (Notificacion notificacio : cliente.getNotificaciones()) {
+            notificacio.notificar(mensaje, cliente);
         }
     }
 

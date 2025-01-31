@@ -36,6 +36,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testNotificarConDatosValidos() {
+        System.out.println("Test-NotificacionEmailTest-001");
         assertDoesNotThrow(() -> notificacion.notificar("Mensaje de prueba", cliente));
     }
 
@@ -48,6 +49,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testNotificarConMensajeVacio() {
+        System.out.println("Test-NotificacionEmailTest-002");
         assertDoesNotThrow(() -> notificacion.notificar("", cliente));
     }
 
@@ -60,6 +62,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testNotificarConClienteNulo() {
+        System.out.println("Test-NotificacionEmailTest-003");
         assertThrows(NullPointerException.class, () -> notificacion.notificar("Mensaje de prueba", null));
     }
 
@@ -72,6 +75,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testNotificarConCorreoInvalido() {
+        System.out.println("Test-NotificacionEmailTest-004");
         notificacion.setCorreo("correo-invalido");
         assertDoesNotThrow(() -> notificacion.notificar("Mensaje de prueba", cliente));
         // Se recomienda agregar validación en la implementación de NotificacionEmail
@@ -86,6 +90,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testGetCorreo() {
+        System.out.println("Test-NotificacionEmailTest-005");
         assertEquals("test@example.com", notificacion.getCorreo());
     }
 
@@ -98,6 +103,7 @@ class NotificacionEmailTest {
      */
     @Test
     void testSetCorreo() {
+        System.out.println("Test-NotificacionEmailTest-006");
         notificacion.setCorreo("nuevo@example.com");
         assertEquals("nuevo@example.com", notificacion.getCorreo());
     }
@@ -111,6 +117,7 @@ class NotificacionEmailTest {
 
     @Test
     public void testNotificarEmailConCorreoVacio() {
+        System.out.println("Test-NotificacionEmailTest-007");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         NotificacionEmail notificacion = new NotificacionEmail("");
 
@@ -130,6 +137,7 @@ class NotificacionEmailTest {
 
     @Test
     public void testNotificarEmailConClienteNulo() {
+    System.out.println("Test-NotificacionEmailTest-008");
         NotificacionEmail notificacion = new NotificacionEmail("juan@email.com");
 
         Exception exception = assertThrows(NullPointerException.class, () -> {

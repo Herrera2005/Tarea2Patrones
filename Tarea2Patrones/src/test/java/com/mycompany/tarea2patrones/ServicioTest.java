@@ -62,6 +62,7 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionAdministracion() {
+        System.out.println("Test-ServicioTest-001");
         inputProvider.setInputs("admin", "1234");
         System.out.println("Administrador - Inicio de Sesion");
         servicio.iniciarSesionAdministracion(reservas, vuelos, vehiculos);
@@ -73,6 +74,7 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionCliente() {
+        System.out.println("Test-ServicioTest-002");
         // Simulate user input for the test
         Scanner mockScanner = new Scanner("1"); // Simulating the user entering "1" for "Ver reservas"
 
@@ -88,6 +90,7 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionClienteOpcionInvalida() {
+        System.out.println("Test-ServicioTest-003");
         inputProvider.setInputs("3");
         servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
 
@@ -96,6 +99,7 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionClienteInputNoNumerico() {
+        System.out.println("Test-ServicioTest-004");
         inputProvider.setInputs("abc");
         assertThrows(InputMismatchException.class, () -> servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos));
     }

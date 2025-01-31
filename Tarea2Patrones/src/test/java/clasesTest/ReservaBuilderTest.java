@@ -37,6 +37,7 @@ public class ReservaBuilderTest {
 
     @Test
     public void testBuildReservaExitosa() {
+        System.out.println("Test-ReservaBuilderTest-001");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -66,6 +67,7 @@ public class ReservaBuilderTest {
 
     @Test
     public void testBuildReservaFaltandoDatos() {
+        System.out.println("Test-ReservaBuilderTest-002");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
