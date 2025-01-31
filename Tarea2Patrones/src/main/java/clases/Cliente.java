@@ -4,42 +4,26 @@
  */
 package clases;
 
+import Notificaciones.Notificacion;
+import claseVehiculo.Vehiculo;
+import claseVuelo.Vuelo;
+import com.mycompany.tarea2patrones.MenuC;
+import enums.EstadoPago;
+import enums.EstadoReserva;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-
-import com.mycompany.tarea2patrones.Tarea2Patrones;
-
-import Notificaciones.Notificacion;
-import Observer.GestorReservas;
-import Observer.ObservadorCambioReserva;
-import Observer.ObservadorIncumplimiento;
-import claseVehiculo.Vehiculo;
-import claseVehiculo.VehiculoEconomico;
-import claseVuelo.Vuelo;
-import com.mycompany.tarea2patrones.MenuC;
-
-import enums.EstadoPago;
-import enums.EstadoReserva;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.util.*;
 
 /**
- *
  * @author herreranc
  */
-public class Cliente extends Usuario{
-    
+public class Cliente extends Usuario {
+
     private List<Reserva> reservas;
     private List<Notificacion> notificaiones;
 
@@ -49,13 +33,69 @@ public class Cliente extends Usuario{
         reservas = new ArrayList<>();
     }
 
+    // Método para obtener una copia de la lista de reservas (encapsulación)
+    public List<Reserva> obtenerReservas() {
+        return new ArrayList<>(reservas); // Devuelve una copia para evitar modificaciones externas
+    }
+
+    // Método para agregar una reserva
+    public void agregarReserva(Reserva reserva) {
+        if (reservas == null) {
+            reservas = new ArrayList<>();
+        }
+        reservas.add(reserva);
+    }
+
+    // Método para eliminar una reserva por ID
+    public void eliminarReserva(int idReserva) {
+        reservas.removeIf(reserva -> reserva.getIdReserva() == idReserva);
+    }
+
+    // Método para mostrar las reservas del cliente
+    public void mostrarReservas() {
+        if (reservas.isEmpty()) {
+            System.out.println("No tienes reservas.");
+            return;
+        }
+        System.out.println("=== Tus Reservas ===");
+        for (Reserva reserva : reservas) {
+            System.out.println(reserva.toString());
+        }
+    }
+
+    public void cancelarReserva() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Cancelar Reserva ===");
+        mostrarReservas();
+        if (reservas.isEmpty()) {
+            return;
+        }
+
+        System.out.print("Introduce el ID de la reserva que deseas cancelar: ");
+        int idReserva = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean reservaEncontrada = reservas.stream()
+                .anyMatch(reserva -> reserva.getIdReserva() == idReserva);
+
+        if (reservaEncontrada) {
+            eliminarReserva(idReserva);
+            System.out.println("Reserva cancelada exitosamente.");
+        } else {
+            System.out.println("No se encontró una reserva con ese ID.");
+        }
+    }
+
+
     public List<Reserva> getReservas() {
         return reservas;
     }
-    
-    public void registrarse(){
-    
+
+    public void registrarse() {
+
     }
+
     public void realizarReservaPorConsola(List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
         Vehiculo vehiculoSeleccionado = seleccionarVehiculo(vehiculos);
         if (vehiculoSeleccionado == null) {
@@ -129,11 +169,7 @@ public class Cliente extends Usuario{
         LocalDate localDate = LocalDate.now();
         Pago pago = new Pago(montoPago, "Método de pago", EstadoPago.CONFIRMADO);
 
-        Reserva reserva = new Reserva(
-                rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE,
-                Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                vehiculo, vuelo, pago, this
-        );
+        Reserva reserva = new Reserva(rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE, Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), vehiculo, vuelo, pago, this);
 
         reservas.add(reserva);
         this.agregarReserva(reserva); // Agregar la reserva a la lista del cliente
@@ -149,12 +185,11 @@ public class Cliente extends Usuario{
         System.out.println("Vuelo seleccionado: " + reserva.getVuelo().toString());
         System.out.println("Monto pagado: " + montoPago);
     }
-    public List<Notificacion> getNotificaciones(){
+
+    public List<Notificacion> getNotificaciones() {
         return notificaiones;
     }
 
-    
-    
     public void cargarReservas(File archivoCliente, Map<Integer, Reserva> todasLasReservas) {
         this.reservas = new ArrayList<>(); // Inicializar la lista de reservas
         try (BufferedReader reader = new BufferedReader(new FileReader(archivoCliente))) {
@@ -178,57 +213,19 @@ public class Cliente extends Usuario{
             System.out.println("Error al leer las reservas del cliente: " + e.getMessage());
         }
     }
-    public void agregarReserva(Reserva reserva) {
-        if (reservas == null) {
-            reservas = new ArrayList<>();
+
+
+
+
+
+    public void addNotificacion(Notificacion notificacion) {
+        if (this.notificaiones == null) {
+            this.notificaiones = new ArrayList<>();
         }
-
-        // Agregar la reserva a la lista del cliente
-        reservas.add(reserva);
-
-       
-        
-    }
-   public void eliminarReserva(int idReserva) {
-        reservas.removeIf(reserva -> reserva.getIdReserva() == idReserva);
+        this.notificaiones.add(notificacion);
     }
 
-public static void cancelarReserva(Cliente cliente) {
-    Scanner scanner = new Scanner(System.in);
-
-    System.out.println("=== Eliminar Reserva ===");
-    MenuC.mostrarReservas(cliente);
-    if (cliente.getReservas().isEmpty()) {
-        return;
-    }
-
-    System.out.print("Introduce el ID de la reserva que deseas eliminar: ");
-    int idReserva = scanner.nextInt();
-    scanner.nextLine();
-
-    Reserva reservaAEliminar = null;
-    for (Reserva reserva : cliente.getReservas()) {
-        if (reserva.getIdReserva() == idReserva) {
-            reservaAEliminar = reserva;
-            break;
-        }
-    }
-
-    if (reservaAEliminar != null) {
-        cliente.eliminarReserva(idReserva);
-        System.out.println("Reserva eliminada exitosamente.");
-    } else {
-        System.out.println("No se encontró una reserva con ese ID.");
-    }
-}
-
-public void addNotificacion(Notificacion notificacion) {
-    if (this.notificaiones == null) {
-        this.notificaiones = new ArrayList<>();
-    }
-    this.notificaiones.add(notificacion);
-}
-public int getId() {
+    public int getId() {
         return super.getIdCedula(); // Si 'idCedula' está en Usuario, se accede con un getter
     }
 
