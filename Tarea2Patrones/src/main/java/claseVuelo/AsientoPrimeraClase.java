@@ -1,32 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package claseVuelo;
 
-/**
- *
- * @author usuario
- */
-public class AsientoPrimeraClase extends Asiento{
+public class AsientoPrimeraClase {
+    private final Asiento asientoBase;
 
     public AsientoPrimeraClase(int idClase, double precio) {
-        super(idClase, "PrimeraClase", precio);
+        this.asientoBase = new AsientoConcreto(idClase, "PrimeraClase", precio);
     }
 
-    @Override
-    public void verificarDisponibilidad() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public double getPrecio() {
+        return asientoBase.getPrecio();
     }
 
-    @Override
-    public void bloquearAsiento() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void desbloquear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }
