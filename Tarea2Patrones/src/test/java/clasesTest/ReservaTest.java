@@ -9,6 +9,7 @@ import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Asiento;
 import claseVuelo.Vuelo;
 import clases.Cliente;
+import clases.MetodoPago;
 import clases.Pago;
 import clases.Reserva;
 import enums.EstadoPago;
@@ -38,7 +39,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(200.0, "Paypal", EstadoPago.PENDIENTE);
+        Pago pago = new Pago(200.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
 
         reserva.confirmarReserva();
@@ -59,7 +60,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(200.0, "Paypal", EstadoPago.PENDIENTE);
+        Pago pago = new Pago(200.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);
         Reserva reserva = new Reserva(1, EstadoReserva.CONFIRMADO, new Date(), vehiculo, vuelo, pago, cliente);
 
         reserva.confirmarReserva();
@@ -80,7 +81,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {
@@ -103,7 +104,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         assertEquals(1, reserva.getIdReserva());
     }
@@ -121,7 +122,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0,MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Reserva reserva = new Reserva(-1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         });
@@ -141,7 +142,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         reserva.modificarReserva("Cambio en la reserva");
         assertEquals("Cambio en la reserva", reserva.getEstadoReserva().toString());
@@ -160,7 +161,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -183,7 +184,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         reserva.cancelarReserva("");
         assertEquals(EstadoReserva.CANCELADA, reserva.getEstadoReserva());
@@ -202,7 +203,7 @@ public class ReservaTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.CANCELADA, new Date(), vehiculo, vuelo, pago, cliente);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {

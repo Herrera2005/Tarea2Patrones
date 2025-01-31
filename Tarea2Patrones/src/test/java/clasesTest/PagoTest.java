@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clasesTest;
+import clases.MetodoPago;
 import clases.Pago;
 import enums.EstadoPago;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +24,7 @@ public class PagoTest {
 
     @Test
     public void testPagoCreacionExitosa() {
-        Pago pago = new Pago(150.0, "Tarjeta de Crédito", EstadoPago.CONFIRMADO);
+        Pago pago = new Pago(150.0, MetodoPago.TARJETA, EstadoPago.CONFIRMADO);
 
         assertEquals(150.0, pago.getMonto());
         assertEquals("Tarjeta de Crédito", pago.getMetodoPago());
@@ -40,7 +41,7 @@ public class PagoTest {
     @Test
     public void testPagoConMontoNegativo() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Pago(-50.0, "Paypal", EstadoPago.PENDIENTE);
+            new Pago(-50.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);
         });
 
         assertEquals("El monto no puede ser negativo", exception.getMessage());
@@ -56,7 +57,7 @@ public class PagoTest {
     @Test
     public void testPagoConMetodoInvalido() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Pago(100.0, "Método Invalido", EstadoPago.PENDIENTE);
+            new Pago(100.0, MetodoPago.EFECTIVO, EstadoPago.PENDIENTE);
         });
 
         assertEquals("Método de pago no válido", exception.getMessage());

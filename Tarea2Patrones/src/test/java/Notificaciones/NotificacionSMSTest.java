@@ -78,4 +78,22 @@ class NotificacionSMSTest {
         NotificacionSMS notificacionInvalida = new NotificacionSMS("");
         assertDoesNotThrow(() -> notificacionInvalida.notificar("Hola", cliente)); // Podría requerir un manejo especial
     }
+ 
+//Escenario de falla 2: Cliente nulo
+    // ID: TEST05
+    // Propósito: Verificar que la notificación falle si el cliente es nulo.
+    // Precondiciones: Cliente nulo.
+    // Entradas: "Mensaje de prueba", cliente nulo.
+    // Salidas Esperadas: Se espera que lance una excepción debido a que el cliente es nulo.
+
+    @Test
+    public void testNotificarSMSConClienteNulo() {
+        NotificacionSMS notificacion = new NotificacionSMS("123456789");
+
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            notificacion.notificar("Mensaje de prueba", null);
+        });
+
+        assertEquals("El cliente no puede ser nulo", exception.getMessage());
+    }
 }

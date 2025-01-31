@@ -9,6 +9,7 @@ import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Asiento;
 import claseVuelo.Vuelo;
 import clases.Cliente;
+import clases.MetodoPago;
 import clases.Pago;
 import clases.Reserva;
 import clases.ReservaBuilder;
@@ -39,7 +40,7 @@ public class ReservaBuilderTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(200.0, "Paypal", EstadoPago.CONFIRMADO);
+        Pago pago = new Pago(200.0, MetodoPago.PAYPAL, EstadoPago.CONFIRMADO);
 
         Reserva reserva = new ReservaBuilder()
                 .setIdReserva(1)
@@ -68,7 +69,7 @@ public class ReservaBuilderTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(200.0, "Paypal", EstadoPago.CONFIRMADO);
+        Pago pago = new Pago(200.0, MetodoPago.PAYPAL, EstadoPago.CONFIRMADO);
 
         Exception exception = assertThrows(NullPointerException.class, () -> {
             new ReservaBuilder()

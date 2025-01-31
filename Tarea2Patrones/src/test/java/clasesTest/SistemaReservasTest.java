@@ -9,6 +9,7 @@ import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Asiento;
 import claseVuelo.Vuelo;
 import clases.Cliente;
+import clases.MetodoPago;
 import clases.Pago;
 import clases.Reserva;
 import clases.SistemaReservas;
@@ -40,7 +41,7 @@ public class SistemaReservasTest {
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
-        Pago pago = new Pago(0.0, "Paypal", EstadoPago.PENDIENTE);  // Pago no realizado
+        Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         sistema.addReserva(reserva);
         assertEquals(1, sistema.getReservas().size());
