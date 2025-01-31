@@ -167,7 +167,7 @@ public class Cliente extends Usuario {
     private Reserva crearReserva(Vehiculo vehiculo, Vuelo vuelo, double montoPago) {
         Random rd = new Random();
         LocalDate localDate = LocalDate.now();
-        Pago pago = new Pago(montoPago, "Método de pago", EstadoPago.CONFIRMADO);
+        Pago pago = new Pago(montoPago, MetodoPago.TRANSFERENCIA, EstadoPago.CONFIRMADO);
 
         Reserva reserva = new Reserva(rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE, Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), vehiculo, vuelo, pago, this);
 

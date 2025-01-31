@@ -1,25 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clases;
 
 import enums.EstadoPago;
+import clases.MetodoPago; // Importar el nuevo enum
 
-/**
- *
- * @author herreranc
- */
 public class Pago {
     private double monto;
-    private String metodoPago;
+    private MetodoPago metodoPago; // Cambiar de String a MetodoPago
     private EstadoPago estadoPago;
 
+    // Constructor actualizado
+    public Pago(double monto, MetodoPago metodoPago, EstadoPago estadoPago) {
+        this.monto = monto;
+        this.metodoPago = metodoPago;
+        this.estadoPago = estadoPago;
+    }
+
+    // Getters
     public double getMonto() {
         return monto;
     }
 
-    public String getMetodoPago() {
+    public MetodoPago getMetodoPago() { // Cambiar el tipo de retorno a MetodoPago
         return metodoPago;
     }
 
@@ -27,23 +28,20 @@ public class Pago {
         return estadoPago;
     }
 
-    public Pago(double monto, String metodoPago, EstadoPago estadoPago) {
-        this.monto = monto;
-        this.metodoPago = metodoPago;
-        this.estadoPago = estadoPago;
+    // Métodos de la clase
+    public void procesarPago() {
+        // Lógica para procesar el pago
     }
-    
-    public void procesarPago(){
-    
-    }
-    
-    public boolean validarPago(){
+
+    public boolean validarPago() {
+        // Lógica para validar el pago
         return true;
     }
+
     @Override
     public String toString() {
         return monto + "," +
-               metodoPago + "," +
-               estadoPago;
+                metodoPago + "," +
+                estadoPago;
     }
 }

@@ -29,7 +29,7 @@ public class SistemaReservas {
                 fechaActual,
                 vehiculos.get(0),
                 vuelos.get(0),
-                new Pago(100, "Paypal", EstadoPago.PENDIENTE),
+                new Pago(100, MetodoPago.TRANSFERENCIA, EstadoPago.PENDIENTE),
                 clientes.get(0)));
         vehiculos.get(0).reservarVehiculo(reservas.get(0));
         vuelos.get(0).anadirPasajero(clientes.get(0));
@@ -40,7 +40,7 @@ public class SistemaReservas {
                 fechaActual,
                 vehiculos.get(1),
                 vuelos.get(1),
-                new Pago(120, "Tarjeta de Crédito", EstadoPago.PENDIENTE),
+                new Pago(120, MetodoPago.TRANSFERENCIA, EstadoPago.PENDIENTE),
                 clientes.get(0)));
         vehiculos.get(1).reservarVehiculo(reservas.get(1));
         vuelos.get(1).anadirPasajero(clientes.get(0));
@@ -51,7 +51,7 @@ public class SistemaReservas {
                 fechaActual,
                 vehiculos.get(2),
                 vuelos.get(0),
-                new Pago(150, "Paypal", EstadoPago.PENDIENTE),
+                new Pago(150, MetodoPago.PAYPAL, EstadoPago.PENDIENTE),
                 clientes.get(1)));
         vehiculos.get(2).reservarVehiculo(reservas.get(2));
         vuelos.get(0).anadirPasajero(clientes.get(1));
