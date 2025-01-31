@@ -39,6 +39,7 @@ class NotificacionSMSTest {
      */
     @Test
     void testNotificar_CasoExitoso() {
+        System.out.println("Test-NotificacionSMSTest-001");
         assertDoesNotThrow(() -> notificacion.notificar("Hola, este es un test", cliente));
     }
     
@@ -51,6 +52,7 @@ class NotificacionSMSTest {
      */
     @Test
     void testNotificar_MensajeVacio() {
+        System.out.println("Test-NotificacionSMSTest-002");
         assertDoesNotThrow(() -> notificacion.notificar("", cliente));
     }
     
@@ -63,6 +65,7 @@ class NotificacionSMSTest {
      */
     @Test
     void testNotificar_ClienteNulo() {
+        System.out.println("Test-NotificacionSMSTest-003");
         assertThrows(NullPointerException.class, () -> notificacion.notificar("Hola", null));
     }
     
@@ -75,11 +78,12 @@ class NotificacionSMSTest {
      */
     @Test
     void testNotificar_NumeroInvalido() {
+        System.out.println("Test-NotificacionSMSTest-004");
         NotificacionSMS notificacionInvalida = new NotificacionSMS("");
         assertDoesNotThrow(() -> notificacionInvalida.notificar("Hola", cliente)); // Podría requerir un manejo especial
     }
  
-//Escenario de falla 2: Cliente nulo
+//Escenario de falla 1: Cliente nulo
     // ID: TEST05
     // Propósito: Verificar que la notificación falle si el cliente es nulo.
     // Precondiciones: Cliente nulo.
@@ -88,6 +92,7 @@ class NotificacionSMSTest {
 
     @Test
     public void testNotificarSMSConClienteNulo() {
+        System.out.println("Test-NotificacionSMSTest-005");
         NotificacionSMS notificacion = new NotificacionSMS("123456789");
 
         Exception exception = assertThrows(NullPointerException.class, () -> {

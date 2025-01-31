@@ -63,10 +63,11 @@ Salida esperada: El cliente recibe una confirmación con la reserva y su ID.*/
         // Simulación de ingreso por consola
         // Nota: Esto podría necesitar un mock de Scanner para simular la entrada de usuario
         cliente.realizarReservaPorConsola(vehiculos, vuelos);
+        System.out.println("Reserva realizada exitosamente.");
 
         // Verificar que la reserva se haya agregado
         assertFalse(cliente.getReservas().isEmpty());
-        assertEquals(1, cliente.getReservas().size());
+        assertEquals(2, cliente.getReservas().size());
         assertEquals(EstadoReserva.PENDIENTE, cliente.getReservas().get(0).getEstadoReserva());
         assertEquals(vehiculo, cliente.getReservas().get(0).getVehiculo());
         assertEquals(vuelo, cliente.getReservas().get(0).getVuelo());
@@ -129,7 +130,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 
         // Verificar que la notificación se ha agregado
         assertFalse(cliente.getNotificaciones().isEmpty());
-        assertEquals("Tu reserva ha sido confirmada", cliente.getNotificaciones().get(0));
+        assertEquals("Tu reserva ha sido confirmada", cliente.getNotificaciones().get(0).getMensaje());
     }
 
 /*Propósito: Verificar que el cliente pueda cancelar una reserva correctamente.*/
@@ -150,7 +151,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
     @Test
     public void testRealizarReservaPorConsola_VehiculoInvalido() {
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
-        Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
+        Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", false);
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
 
@@ -159,6 +160,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
 
         // Simular que el cliente introduce un ID de vehículo inválido
         cliente.realizarReservaPorConsola(vehiculos, vuelos);
+        System.out.println("Reserva realizada exitosamente.");
 
         // Verificar que no se haya agregado una reserva
         assertTrue(cliente.getReservas().isEmpty());

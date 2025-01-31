@@ -34,7 +34,7 @@ public abstract class Vehiculo {
 
     //para administracion
     public void cancelarVehiculo(String mensaje){
-        reserva.quitarVehiculo(mensaje);
+        //reserva.quitarVehiculo(mensaje);
         reserva = null;
         disponibilidad = true;
     }

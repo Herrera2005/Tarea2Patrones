@@ -187,7 +187,7 @@ public class ReservaTest {
         Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         reserva.cancelarReserva("");
-        assertEquals(EstadoReserva.CANCELADA, reserva.getEstadoReserva());
+        assertEquals(EstadoReserva.CANCELADO, reserva.getEstadoReserva());
     }
     
 //Escenario de falla: Intento de cancelar reserva ya cancelada
@@ -204,7 +204,7 @@ public class ReservaTest {
         List<Asiento> asientos = new ArrayList<>();
         Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
         Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
-        Reserva reserva = new Reserva(1, EstadoReserva.CANCELADA, new Date(), vehiculo, vuelo, pago, cliente);
+        Reserva reserva = new Reserva(1, EstadoReserva.CANCELADO, new Date(), vehiculo, vuelo, pago, cliente);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             reserva.cancelarReserva("");

@@ -27,7 +27,7 @@ public class PagoTest {
         Pago pago = new Pago(150.0, MetodoPago.TARJETA, EstadoPago.CONFIRMADO);
 
         assertEquals(150.0, pago.getMonto());
-        assertEquals("Tarjeta de Crédito", pago.getMetodoPago());
+        assertEquals(MetodoPago.TARJETA, pago.getMetodoPago());
         assertEquals(EstadoPago.CONFIRMADO, pago.getEstadoPago());
     }
    
