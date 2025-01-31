@@ -35,6 +35,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaExitosa() {
+        System.out.println("Test-ReservaTest-001");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -56,6 +57,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaYaConfirmada() {
+        System.out.println("Test-ReservaTest-002");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -77,6 +79,7 @@ public class ReservaTest {
 
     @Test
     public void testConfirmarReservaSinPago() {
+        System.out.println("Test-ReservaTest-003");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -100,6 +103,7 @@ public class ReservaTest {
 
     @Test
     public void testGetIdReservaExitosa() {
+        System.out.println("Test-ReservaTest-004");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -118,6 +122,7 @@ public class ReservaTest {
 
     @Test
     public void testGetIdReservaConIdNegativo() {
+        System.out.println("Test-ReservaTest-005");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -138,6 +143,7 @@ public class ReservaTest {
 
     @Test
     public void testModificarReservaExitosa() {
+        System.out.println("Test-ReservaTest-006");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -157,6 +163,7 @@ public class ReservaTest {
 
     @Test
     public void testModificarReservaConTextoVacio() {
+        System.out.println("Test-ReservaTest-007");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -180,6 +187,7 @@ public class ReservaTest {
 
     @Test
     public void testCancelarReservaExitosa() {
+        System.out.println("Test-ReservaTest-008");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
@@ -199,6 +207,7 @@ public class ReservaTest {
 
     @Test
     public void testCancelarReservaYaCancelada() {
+        System.out.println("Test-ReservaTest-009");
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();

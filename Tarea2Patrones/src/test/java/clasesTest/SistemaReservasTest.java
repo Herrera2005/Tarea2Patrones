@@ -36,6 +36,7 @@ public class SistemaReservasTest {
 
     @Test
     public void testAgregarReservaExitosa() {
+        System.out.println("Test-SistemaReservasTest-001");
         SistemaReservas sistema= new SistemaReservas();
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
@@ -56,6 +57,7 @@ public class SistemaReservasTest {
 
     @Test
     public void testAgregarReservaConReservaNula() {
+        System.out.println("Test-SistemaReservasTest-002");
         SistemaReservas sistema = new SistemaReservas();
 
         Exception exception = assertThrows(NullPointerException.class, () -> {

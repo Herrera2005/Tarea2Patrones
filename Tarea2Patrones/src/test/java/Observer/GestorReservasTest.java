@@ -36,6 +36,7 @@ class GestorReservasTest {
      */
     @Test
     void testAgregarObservador() {
+        System.out.println("Test-GestorReservasTest-001");
         Observador observador = reserva -> notificado = true;
 
         gestor.addObserver(observador);
@@ -50,6 +51,7 @@ class GestorReservasTest {
      */
     @Test
     void testEliminarObservador() {
+        System.out.println("Test-GestorReservasTest-002");
         Observador observador = reserva -> notificado = true;
 
         gestor.addObserver(observador);
@@ -65,6 +67,7 @@ class GestorReservasTest {
      */
     @Test
     void testEliminarObservadorNoExistente() {
+        System.out.println("Test-GestorReservasTest-003");
         Observador observador = reserva -> notificado = true;
 
         assertDoesNotThrow(() -> gestor.removeObserver(observador), 
@@ -77,6 +80,7 @@ class GestorReservasTest {
      */
     @Test
     void testNotificarTodosLosObservadores() {
+        System.out.println("Test-GestorReservasTest-004");
         boolean[] notificados = {false, false, false};
 
         Observador observador1 = reserva -> notificados[0] = true;
@@ -100,6 +104,7 @@ class GestorReservasTest {
      */
     @Test
     void testNotificarSinObservadores() {
+        System.out.println("Test-GestorReservasTest-005");
         assertDoesNotThrow(() -> gestor.notifyObservers(reserva), 
             "No debería lanzarse una excepción si no hay observadores.");
     }
@@ -110,6 +115,7 @@ class GestorReservasTest {
      */
     @Test
     void testAgregarObservadorNulo() {
+        System.out.println("Test-GestorReservasTest-006");
         assertThrows(NullPointerException.class, () -> gestor.addObserver(null),
             "Agregar un observador nulo debería lanzar NullPointerException.");
     }
