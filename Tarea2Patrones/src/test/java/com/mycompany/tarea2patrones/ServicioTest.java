@@ -11,6 +11,7 @@ import clases.Cliente;
 import clases.Reserva;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -25,8 +26,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de pruebas unitarias para la clase Servicio.
+ *
+ * Se prueban los métodos en escenarios normales y en al menos dos escenarios de fallo.
+ */
 class ServicioTest {
     private Servicio servicio;
     private List<Cliente> clientes;
@@ -51,10 +62,8 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionAdministracion() {
-        // Simula la entrada del usuario para administrador correcto
         inputProvider.setInputs("admin", "1234");
-        System.out.println("Administrador - Inicio de Sesión");
-
+        System.out.println("Administrador - Inicio de Sesion");
         servicio.iniciarSesionAdministracion(reservas, vuelos, vehiculos);
 
         assertNotNull(reservas);
@@ -64,46 +73,49 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionCliente() {
-        // Simula la selección del cliente "Juan Perez"
-        inputProvider.setInputs("1", "4");
-        System.out.println("Cliente - Inicio de Sesión");
+        // Simulate user input for the test
+        Scanner mockScanner = new Scanner("1"); // Simulating the user entering "1" for "Ver reservas"
 
-        servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
+        inputProvider.setInputs("1"); // This seems to be used elsewhere in your test setup; you might not need this
+        System.out.println("Cliente - Inicio de Sesion");
 
+        // Pass the mockScanner to the menuCliente method
+        servicio.iniciarSesionCliente(mockScanner, vuelos, vehiculos); // Assuming this uses the menuCliente method internally
+
+        // Assuming clientes.get(0).getNombre() should return the correct name after the login
         assertEquals("Juan Perez", clientes.get(0).getNombre());
     }
 
     @Test
     void testIniciarSesionClienteOpcionInvalida() {
-        // Simula una opción inválida
-        inputProvider.setInputs("3"); // No hay cliente con ID 3
-
+        inputProvider.setInputs("3");
         servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
+
         assertFalse(clientes.stream().anyMatch(c -> c.getId() == 3));
     }
 
     @Test
     void testIniciarSesionClienteInputNoNumerico() {
-        // Simula entrada de texto no numérico
         inputProvider.setInputs("abc");
-
-        assertThrows(Exception.class, () -> servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos));
+        assertThrows(InputMismatchException.class, () -> servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos));
     }
 
     /**
      * MockInputProvider permite definir entradas simuladas para reemplazar Scanner.
      */
     private static class MockInputProvider {
-        private final Queue<String> inputs = new LinkedList<>();
+        private StringBuilder inputBuffer = new StringBuilder();
 
         void setInputs(String... inputs) {
-            this.inputs.clear();
-            this.inputs.addAll(Arrays.asList(inputs));
+            inputBuffer.setLength(0); // Limpiar el buffer
+            for (String input : inputs) {
+                inputBuffer.append(input).append("\n");
+            }
         }
 
         Scanner getScanner() {
-            String simulatedInput = String.join("\n", inputs) + "\n";
-            return new Scanner(new ByteArrayInputStream(simulatedInput.getBytes()));
+            InputStream inputStream = new ByteArrayInputStream(inputBuffer.toString().getBytes());
+            return new Scanner(inputStream);
         }
     }
 }

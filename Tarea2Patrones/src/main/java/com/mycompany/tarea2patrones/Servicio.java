@@ -62,16 +62,17 @@ public class Servicio {
     public void iniciarSesionAdministracion(List<Reserva> reservas, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
         System.out.println("=== Acceso a Administración ===");
         System.out.println("¡Acceso otorgado sin necesidad de usuario ni contraseña!");
-        MenuAd.menuAdministracion(reservas, vuelos, vehiculos);
+        MenuAd menuAd = new MenuAd(scanner);
+        menuAd.menuAdministracion(reservas, vuelos, vehiculos);
     }
 
-    private void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
+    public void iniciarSesionCliente(Scanner scanner, List<Vuelo> vuelos, List<Vehiculo> vehiculos) {
         GestorClientes gestorClientes = new GestorClientes(clientes);
         Autenticacion autenticacion = new Autenticacion(gestorClientes);
 
         Cliente clienteSeleccionado = autenticacion.iniciarSesionCliente(scanner);
         if (clienteSeleccionado != null) {
-            MenuC.menuCliente(clienteSeleccionado, vehiculos, vuelos);
+            MenuC.menuCliente(clienteSeleccionado, vehiculos, vuelos,scanner);
         }
     }
 
