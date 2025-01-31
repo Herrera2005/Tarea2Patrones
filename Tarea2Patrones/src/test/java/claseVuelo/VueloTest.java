@@ -7,6 +7,7 @@ package claseVuelo;
 import clases.Cliente;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +32,7 @@ class VueloTest {
         Date horaSalida = sdf.parse("10-10-2025");
         Date horaLlegada = sdf.parse("11-10-2025");
         List<Asiento> asientos = new ArrayList<>();
-        vuelo = new Vuelo(1, "AeroTest", horaSalida, horaLlegada, 10, asientos);
+        vuelo = new Vuelo(1, "AeroTest", horaSalida, horaLlegada, 10, Collections.singletonList(asientos));
         cliente = new Cliente(1,"Juan Perez", "12345@h","s");
     }
 

@@ -16,6 +16,7 @@ import clases.SistemaReservas;
 import enums.EstadoPago;
 import enums.EstadoReserva;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +41,7 @@ public class SistemaReservasTest {
         Cliente cliente = new Cliente(123456, "Juan Pérez", "juan@email.com", "password");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
-        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
+        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10, Collections.singletonList(asientos));
         Pago pago = new Pago(0.0, MetodoPago.PAYPAL, EstadoPago.PENDIENTE);  // Pago no realizado
         Reserva reserva = new Reserva(1, EstadoReserva.PENDIENTE, new Date(), vehiculo, vuelo, pago, cliente);
         sistema.addReserva(reserva);

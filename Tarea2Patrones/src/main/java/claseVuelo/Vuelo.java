@@ -4,16 +4,9 @@
  */
 package claseVuelo;
 
-import claseVuelo.Asiento;
 import clases.Cliente;
 import clases.Reserva;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.security.DrbgParameters.Reseed;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +24,7 @@ public class Vuelo {
     private Date horaSalida;
     private Date horaLlegada;
     private int asientosDisponibles;
-    private List<Asiento> clases;
+    private List<Object> clases;
 
     // para administracion
     public void cancelarVuelo(String mensaje){
@@ -74,7 +67,7 @@ public class Vuelo {
         return asientosDisponibles;
     }
 
-    public List<Asiento> getClases() {
+    public List<Object> getClases() {
         return clases;
     }
 
@@ -83,7 +76,7 @@ public class Vuelo {
         asientosDisponibles -=1;
     }
 
-    public Vuelo(int idVuelo, String aerolinea, Date horaSalida, Date horaLlegada, int asientosDisponibles, List<Asiento> clases) {
+    public Vuelo(int idVuelo, String aerolinea, Date horaSalida, Date horaLlegada, int asientosDisponibles, List<Object> clases) {
         this.idVuelo = idVuelo;
         this.aerolinea = aerolinea;
         this.horaSalida = horaSalida;
@@ -124,49 +117,6 @@ public class Vuelo {
     
     public void confirmarVuelo(){
     
-    }
-    
-    public static List<Vuelo> cargarVuelosDesdeArchivo() {
-        List<Vuelo> vuelos = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-        try (BufferedReader br = new BufferedReader(new FileReader("Vuelos.txt"))) {
-            String linea;
-
-            while ((linea = br.readLine()) != null) {
-                String[] partes = linea.split(",", 6);
-
-                int idVuelo = Integer.parseInt(partes[0].trim());
-                String aerolinea = partes[1].trim();
-                Date horaSalida = sdf.parse(partes[2].trim());
-                Date horaLlegada = sdf.parse(partes[3].trim());
-                int asientosDisponibles = Integer.parseInt(partes[4].trim());
-
-                String clasesTexto = partes[5].trim().replace("{", "").replace("}", "");
-                List<Asiento> clases = crearListaAsientos(clasesTexto.split(";"));
-
-                vuelos.add(new Vuelo(idVuelo, aerolinea, horaSalida, horaLlegada, asientosDisponibles, clases));
-            }
-        } catch (IOException | ParseException e) {
-            System.err.println("Error al cargar vuelos: " + e.getMessage());
-        }
-        return vuelos;
-    }
-    
-    private static List<Asiento> crearListaAsientos(String[] tipos) {
-        List<Asiento> asientos = new ArrayList<>();
-        for (String tipo : tipos) {
-            String[] datos = tipo.split(":");
-            String nombreClase = datos[0].trim();
-            double precio = Double.parseDouble(datos[1].trim());
-
-            switch (nombreClase) {
-                case "Economico" -> asientos.add(new AsientoEconomico(asientos.size() + 1, precio));
-                case "Ejecutivo" -> asientos.add(new AsientoEjecutivo(asientos.size() + 1, precio));
-                case "PrimeraClase" -> asientos.add(new AsientoPrimeraClase(asientos.size() + 1, precio));
-            }
-        }
-        return asientos;
     }
 
     @Override

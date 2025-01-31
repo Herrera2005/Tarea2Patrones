@@ -14,11 +14,8 @@ import clases.Cliente;
 import clases.Reserva;
 import enums.EstadoReserva;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +52,7 @@ Salida esperada: El cliente recibe una confirmación con la reserva y su ID.*/
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
-        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
+        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10, Collections.singletonList(asientos));
         
         List<Vehiculo> vehiculos = List.of(vehiculo);
         List<Vuelo> vuelos = List.of(vuelo);
@@ -152,7 +149,7 @@ Salida esperada: El cliente carga correctamente las reservas y las asocia.*/
         Cliente cliente = new Cliente(12345, "Carlos", "carlos@mail.com", "password123");
         Vehiculo vehiculo = new VehiculoEconomico(1, "Economico", "Proveedor A", true);
         List<Asiento> asientos = new ArrayList<>();
-        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10,asientos);
+        Vuelo vuelo = new Vuelo(1, "Aerolínea A", new Date(), new Date(), 10, Collections.singletonList(asientos));
 
         List<Vehiculo> vehiculos = List.of(vehiculo);
         List<Vuelo> vuelos = List.of(vuelo);
