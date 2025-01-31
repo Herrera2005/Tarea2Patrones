@@ -80,7 +80,7 @@ class NotificacionSMSTest {
     }
  
 //Escenario de falla 2: Cliente nulo
-    // Identificador: testNotificarSMSConClienteNulo
+    // ID: TEST05
     // Propósito: Verificar que la notificación falle si el cliente es nulo.
     // Precondiciones: Cliente nulo.
     // Entradas: "Mensaje de prueba", cliente nulo.

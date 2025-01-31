@@ -103,7 +103,7 @@ class NotificacionEmailTest {
     }
     
     /*Escenario de falla 1: Correo vacío*/
-    // Identificador: testNotificarEmailConCorreoVacio
+    // Id: TC-NE-007
     // Propósito: Verificar que la notificación falle si el correo es vacío.
     // Precondiciones: Cliente y correo vacío.
     // Entradas: "Mensaje de prueba", cliente con nombre "Juan Pérez", correo vacío.
@@ -122,7 +122,7 @@ class NotificacionEmailTest {
     }
     
 //Escenario de falla 2: Cliente nulo
-    // Identificador: testNotificarEmailConClienteNulo
+    // Id: TC-NE-008
     // Propósito: Verificar que la notificación falle si el cliente es nulo.
     // Precondiciones: Cliente nulo.
     // Entradas: "Mensaje de prueba", cliente nulo.
