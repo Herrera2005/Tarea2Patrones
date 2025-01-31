@@ -13,8 +13,11 @@ import enums.EstadoReserva;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -115,18 +118,16 @@ class MenuAdTest {
      * MockInputProvider permite definir entradas simuladas para reemplazar Scanner.
      */
     private static class MockInputProvider {
-        private StringBuilder inputBuffer = new StringBuilder();
+        private Queue<String> inputs = new LinkedList<>();
 
-        void setInputs(String... inputs) {
-            inputBuffer.setLength(0); // Limpiar el buffer
-            for (String input : inputs) {
-                inputBuffer.append(input).append("\n");
-            }
+        void setInputs(String... inputsArray) {
+            inputs.clear();
+            Collections.addAll(inputs, inputsArray);
         }
 
         Scanner getScanner() {
-            InputStream inputStream = new ByteArrayInputStream(inputBuffer.toString().getBytes());
-            return new Scanner(inputStream);
+            String inputString = String.join("\n", inputs) + "\n";  // Asegurar que haya una línea final
+            return new Scanner(new ByteArrayInputStream(inputString.getBytes()));
         }
     }
 }
