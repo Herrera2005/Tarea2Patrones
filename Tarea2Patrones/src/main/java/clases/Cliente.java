@@ -56,81 +56,99 @@ public class Cliente extends Usuario{
     public void registrarse(){
     
     }
-    
-    public void realizarReservaPorConsola(List<Vehiculo> vehiculos,List<Vuelo> vuelos) {
-        Random rd = new Random();
-        Scanner scanner = new Scanner(System.in);
-        // Selección de vehículo
+    public void realizarReservaPorConsola(List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
+        Vehiculo vehiculoSeleccionado = seleccionarVehiculo(vehiculos);
+        if (vehiculoSeleccionado == null) {
+            System.out.println("Reserva cancelada: vehículo no encontrado.");
+            return;
+        }
+
+        Vuelo vueloSeleccionado = seleccionarVuelo(vuelos);
+        if (vueloSeleccionado == null) {
+            System.out.println("Reserva cancelada: vuelo no encontrado.");
+            return;
+        }
+
+        double montoPago = realizarPago();
+        Reserva reserva = crearReserva(vehiculoSeleccionado, vueloSeleccionado, montoPago);
+
+        confirmarReserva(reserva, montoPago);
+    }
+
+    // Método para seleccionar un vehículo
+    private Vehiculo seleccionarVehiculo(List<Vehiculo> vehiculos) {
         System.out.println("=== Selecciona un vehículo ===");
         for (Vehiculo v : vehiculos) {
             System.out.println(v.toString());
         }
         System.out.print("Introduce el ID del vehículo: ");
+        Scanner scanner = new Scanner(System.in);
         int idVehiculo = scanner.nextInt();
         scanner.nextLine();
 
-        Vehiculo vehiculoSeleccionado = null;
         for (Vehiculo v : vehiculos) {
             if (v.getIdVehiculo() == idVehiculo) {
-                vehiculoSeleccionado = v;
-                break;
+                return v;
             }
         }
+        return null; // Si no se encuentra el vehículo
+    }
 
-        if (vehiculoSeleccionado == null) {
-            System.out.println("Vehículo no encontrado.");
-            return;
-        }
-
-        // Selección de vuelo
+    // Método para seleccionar un vuelo
+    private Vuelo seleccionarVuelo(List<Vuelo> vuelos) {
         System.out.println("=== Selecciona un vuelo ===");
         for (Vuelo v : vuelos) {
             System.out.println(v.toString());
         }
         System.out.print("Introduce el ID del vuelo: ");
+        Scanner scanner = new Scanner(System.in);
         int idVuelo = scanner.nextInt();
         scanner.nextLine();
 
-        Vuelo vueloSeleccionado = null;
         for (Vuelo v : vuelos) {
             if (v.getIdVuelo() == idVuelo) {
-                vueloSeleccionado = v;
-                break;
+                return v;
             }
         }
+        return null; // Si no se encuentra el vuelo
+    }
 
-        if (vueloSeleccionado == null) {
-            System.out.println("Vuelo no encontrado.");
-            return;
-        }
-
-        // Realizar pago
+    // Método para realizar el pago
+    private double realizarPago() {
         System.out.println("=== Realizar pago ===");
         System.out.print("Introduce el monto a pagar (por ejemplo, 100): ");
+        Scanner scanner = new Scanner(System.in);
         double montoPago = scanner.nextDouble();
         scanner.nextLine();
-        Pago pago = new Pago(montoPago, "Método de pago", EstadoPago.CONFIRMADO); // El pago es exitoso por ahora
+        return montoPago;
+    }
 
-        // Crear la reserva
+    // Método para crear una reserva
+    private Reserva crearReserva(Vehiculo vehiculo, Vuelo vuelo, double montoPago) {
+        Random rd = new Random();
         LocalDate localDate = LocalDate.now();
-        Reserva reserva = new Reserva(
-            rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE, 
-            Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), 
-            vehiculoSeleccionado, vueloSeleccionado, pago, this);  // Asociar el cliente con la reserva
-        
-        // Agregar la reserva a la lista
-        reservas.add(reserva);
-        this.agregarReserva(reserva);  // Agregar la reserva a la lista del cliente
+        Pago pago = new Pago(montoPago, "Método de pago", EstadoPago.CONFIRMADO);
 
-        // Confirmación
+        Reserva reserva = new Reserva(
+                rd.nextInt(Integer.MAX_VALUE), EstadoReserva.PENDIENTE,
+                Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                vehiculo, vuelo, pago, this
+        );
+
+        reservas.add(reserva);
+        this.agregarReserva(reserva); // Agregar la reserva a la lista del cliente
+        return reserva;
+    }
+
+    // Método para confirmar la reserva
+    private void confirmarReserva(Reserva reserva, double montoPago) {
         System.out.println("Reserva realizada exitosamente.");
         System.out.println("ID Reserva: " + reserva.getIdReserva());
         System.out.println("Cliente: " + this.getNombre());
-        System.out.println("Vehículo seleccionado: " + vehiculoSeleccionado.toString());
-        System.out.println("Vuelo seleccionado: " + vueloSeleccionado.toString());
+        System.out.println("Vehículo seleccionado: " + reserva.getVehiculo().toString());
+        System.out.println("Vuelo seleccionado: " + reserva.getVuelo().toString());
         System.out.println("Monto pagado: " + montoPago);
     }
-
     public List<Notificacion> getNotificaciones(){
         return notificaiones;
     }
