@@ -36,8 +36,7 @@ import java.util.Scanner;
  */
 public class MenuC {
     
-    public static void menuCliente(Cliente cliente, List<Vehiculo> vehiculos, List<Vuelo> vuelos) {
-        Scanner scanner = new Scanner(System.in);
+    public static void menuCliente(Cliente cliente, List<Vehiculo> vehiculos, List<Vuelo> vuelos, Scanner scanner) {
         boolean salir = false;
 
         while (!salir) {

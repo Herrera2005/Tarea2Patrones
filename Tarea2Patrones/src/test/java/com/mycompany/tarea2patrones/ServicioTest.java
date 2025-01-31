@@ -9,6 +9,9 @@ import claseVehiculo.VehiculoEconomico;
 import claseVuelo.Vuelo;
 import clases.Cliente;
 import clases.Reserva;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -23,14 +26,26 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de pruebas unitarias para la clase Servicio.
+ *
+ * Se prueban los métodos en escenarios normales y en al menos dos escenarios de fallo.
+ */
 class ServicioTest {
     private Servicio servicio;
     private List<Cliente> clientes;
     private List<Reserva> reservas;
     private List<Vuelo> vuelos;
     private List<Vehiculo> vehiculos;
+
+    private MockInputProvider inputProvider;
 
     @BeforeEach
     void setUp() {
@@ -41,17 +56,14 @@ class ServicioTest {
         vuelos = Arrays.asList(new Vuelo(1, "AeroTest", new Date(), new Date(), 10, new ArrayList<>()));
         vehiculos = Arrays.asList(new VehiculoEconomico(1, "Económico", "ProveedorX", true));
 
-        // Inyectamos un Scanner vacío para evitar entrada manual
-        servicio = new Servicio(clientes, new Scanner(""));
+        inputProvider = new MockInputProvider();
+        servicio = new Servicio(clientes, inputProvider.getScanner());
     }
 
     @Test
     void testIniciarSesionAdministracion() {
-        // Simula la entrada de usuario con un número de administrador correcto
-        Scanner scanner = new Scanner("admin\n1234\n"); // Admin y clave correcta
-        servicio = new Servicio(clientes, scanner);
-
-        System.out.println("Administrador - Inicio de Sesión");
+        inputProvider.setInputs("admin", "1234");
+        System.out.println("Administrador - Inicio de Sesion");
         servicio.iniciarSesionAdministracion(reservas, vuelos, vehiculos);
 
         assertNotNull(reservas);
@@ -61,34 +73,49 @@ class ServicioTest {
 
     @Test
     void testIniciarSesionCliente() {
-        // Simula la entrada de usuario: selecciona cliente "Juan Perez"
-        Scanner scanner = new Scanner("1\n");
-        servicio = new Servicio(clientes, scanner);
+        // Simulate user input for the test
+        Scanner mockScanner = new Scanner("1"); // Simulating the user entering "1" for "Ver reservas"
 
-        System.out.println("Cliente - Inicio de Sesión");
-        servicio.iniciarSesionCliente(scanner, vuelos, vehiculos);
+        inputProvider.setInputs("1"); // This seems to be used elsewhere in your test setup; you might not need this
+        System.out.println("Cliente - Inicio de Sesion");
 
+        // Pass the mockScanner to the menuCliente method
+        servicio.iniciarSesionCliente(mockScanner, vuelos, vehiculos); // Assuming this uses the menuCliente method internally
+
+        // Assuming clientes.get(0).getNombre() should return the correct name after the login
         assertEquals("Juan Perez", clientes.get(0).getNombre());
     }
 
     @Test
     void testIniciarSesionClienteOpcionInvalida() {
-        // Simula la entrada de una opción inválida
-        Scanner scanner = new Scanner("3\n"); // No hay cliente con ID 3
-        servicio = new Servicio(clientes, scanner);
+        inputProvider.setInputs("3");
+        servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos);
 
-        servicio.iniciarSesionCliente(scanner, vuelos, vehiculos);
-        // No se puede iniciar sesión, así que verificamos que no cambia el estado
         assertFalse(clientes.stream().anyMatch(c -> c.getId() == 3));
     }
 
     @Test
     void testIniciarSesionClienteInputNoNumerico() {
-        // Simula entrada de texto no numérico
-        Scanner scanner = new Scanner("abc\n");
-        servicio = new Servicio(clientes, scanner);
+        inputProvider.setInputs("abc");
+        assertThrows(InputMismatchException.class, () -> servicio.iniciarSesionCliente(inputProvider.getScanner(), vuelos, vehiculos));
+    }
 
-        // Se espera que lance una excepción por entrada inválida
-        assertThrows(Exception.class, () -> servicio.iniciarSesionCliente(scanner, vuelos, vehiculos));
+    /**
+     * MockInputProvider permite definir entradas simuladas para reemplazar Scanner.
+     */
+    private static class MockInputProvider {
+        private StringBuilder inputBuffer = new StringBuilder();
+
+        void setInputs(String... inputs) {
+            inputBuffer.setLength(0); // Limpiar el buffer
+            for (String input : inputs) {
+                inputBuffer.append(input).append("\n");
+            }
+        }
+
+        Scanner getScanner() {
+            InputStream inputStream = new ByteArrayInputStream(inputBuffer.toString().getBytes());
+            return new Scanner(inputStream);
+        }
     }
 }
