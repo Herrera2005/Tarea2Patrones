@@ -14,6 +14,10 @@ import enums.EstadoReserva;
 public class SistemaReservas {
     List<Reserva> reservas;
 
+    public SistemaReservas() {
+        this.reservas = new ArrayList();
+    }
+
     public SistemaReservas(List<Vehiculo> vehiculos, List<Vuelo> vuelos, List<Cliente> clientes) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -66,6 +70,10 @@ public class SistemaReservas {
         for (Reserva reserva : reservas) {
             System.out.println(reserva.toString());
         }
+    }
+    
+    public void addReserva(Reserva reserva){
+        reservas.add(reserva);
     }
     
 }
